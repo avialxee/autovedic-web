@@ -2,3 +2,4 @@ flask
 gunicorn
 WTForms
 requests
+pandas

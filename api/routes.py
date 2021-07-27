@@ -1,5 +1,5 @@
 from flask import Blueprint
-
+from classes.vehicles.vehicle import load_vehicles
 api = Blueprint('api', __name__, url_prefix='/api')
 
 @api.route('/', methods=['GET', 'POST'])
@@ -10,7 +10,7 @@ def index():
 
 def models(brand):
     if brand == 'Maruti':
-        return {1: 'Alto200', 2: 'Alto800'}
+        return load_vehicles()['Model']
 
 @api.route('cars/<brand>', methods=['GET'])
 def show_model(brand):

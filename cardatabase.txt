@@ -1,0 +1,36 @@
+Company-Unique,Global-ID,Model,Variant-ID,Variant-desc,Class-ID,Class-desc,Economy
+MSA,1,Alto800,1,Petrol,1,Hatchback,0
+MSA,2,Alto800,3,CNG,1,Hatchback,0
+MSA,3,Altok10,2,Diesel,1,Hatchback,0
+MSA,4,Altok10,1,Petrol,1,Hatchback,0
+MSA,5,Wagon R,1,Petrol,1,Hatchback,0
+MSA,6,Wagon R,2,Diesel,1,Hatchback,0
+MSA,7,Wagon R,3,CNG,1,Hatchback,0
+MSA,8,Celerio,1,Petrol,1,Hatchback,0
+MSA,9,Celerio,2,Diesel,1,Hatchback,0
+MSA,10,Celerio,3,CNG,1,Hatchback,0
+MSA,11,Celerio X,1,Petrol,1,Hatchback,0
+MSA,12,Celerio X,2,Diesel,1,Hatchback,0
+MSA,13,Swift,1,Petrol,1,Hatchback,0
+MSA,14,Swift,2,Diesel,1,Hatchback,0
+MSA,15,A-Star,1,Petrol,1,Hatchback,0
+MSA,16,Maruti 800,1,Petrol,1,Hatchback,0
+MSA,17,Ritz,1,Petrol,1,Hatchback,0
+MSA,18,Ritz,2,Diesel,1,Hatchback,0
+MSA,19,Zen,1,Petrol,1,Hatchback,0
+MSA,20,Zen Estilo,2,Diesel,1,Hatchback,0
+MSA,21,Dzire,1,Petrol,2,Sedan,0
+MSA,22,Dzire,2,Diesel,2,Sedan,0
+MSA,23,Dzire,3,CNG,2,Sedan,0
+MSA,24,Dzire,4,Hybrid,2,Sedan,0
+MSA,25,Esteem,1,Petrol,2,Sedan,0
+MSA,26,Esteem,2,Diesel,2,Sedan,0
+MSA,27,SX 4,1,Petrol,2,Sedan,0
+MSA,28,SX 4,2,Diesel,2,Sedan,0
+MSA,29,Kizashi,1,Petrol,2,Sedan,0
+MSA,30,Ertiga,1,Petrol,3,SUV,0
+MSA,31,Ertiga,2,Diesel,3,SUV,0
+MSA,32,Ertiga,3,CNG,3,SUV,0
+MSA,33,Gypsy,1,Petrol,3,SUV,0
+MSA,34,Gypsy,2,Diesel,3,SUV,0
+MSA,35,Vitara Brezza,1,Petrol,3,SUV,0

@@ -17,10 +17,9 @@
 {% block nav %}
 <div class="mx-auto control contents-wrapper d-flex justify-content-center ">
     <form class="">
-        <div id="nav-autovedic" class="input-group input-group mt-5 ">
+        <div id="nav-autovedic" class="input-group input-group-lg mt-5 ">
             <div class="input-group-prepend ">
-                <button type="button" class="btn btn-outline-primary">Location</button>
-                <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button type="button" class="btn btn-outline-primary " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="bi bi-geo-alt"></i></button>
                 <span class="sr-only">Toggle Dropdown</span>
                 </button>
                 <div class="dropdown-menu">
@@ -29,11 +28,13 @@
                 </div>
             </div>
             
-            <input id="model_brand" class="typeahead form-control " name="model_brand" placeholder="Vehicle Model
+            <input id="model_brand" class="typeahead form-control " name="model_brand" placeholder="Search Garages
                 " required="" type="text" value="">
             
             <div class="input-group-append">
-            <button id="submit" class="btn btn-outline-primary" name="submit" type="submit">Search</button>
+            
+            <button id="submit" class="btn btn-outline-primary" name="submit" type="submit">
+            <i class="bi bi-search"></i></button>
             </div>
         </div>
         
