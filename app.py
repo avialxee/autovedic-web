@@ -1,3 +1,4 @@
+import os
 from flask import Blueprint
 from flask import Flask, redirect, url_for, render_template, request, jsonify
 from api.routes import api
@@ -5,6 +6,7 @@ from home.routes import site
 
 def create_app():
     app = Flask(__name__)
+    app.secret_key = os.urandom(12)
     app.register_blueprint(api)
     app.register_blueprint(site)
     return app

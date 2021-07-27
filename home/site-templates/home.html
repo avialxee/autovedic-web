@@ -13,22 +13,25 @@
     padding-left:2;
     padding-right:2;
 }
+.dropdown-item:hover {
+    cursor:pointer;
+}
+
+
 {% endblock %}
 {% block nav %}
 <div class="mx-auto control contents-wrapper d-flex justify-content-center ">
-    <form class="">
+    <form class="" method="post">
         <div id="nav-autovedic" class="input-group input-group-lg mt-5 ">
             <div class="input-group-prepend ">
                 <button type="button" class="btn btn-outline-primary " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="bi bi-geo-alt"></i></button>
                 <span class="sr-only">Toggle Dropdown</span>
-                </button>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">Rajajipuram</a>
-                    <a class="dropdown-item" href="#">Gomti Nagar</a>
+                    <span class="dropdown-item" >Rajajipuram</span>
+                    <span class="dropdown-item" >Gomti Nagar</span>
                 </div>
             </div>
-            
-            <input id="model_brand" class="typeahead form-control " name="model_brand" placeholder="Search Garages
+            <input id="model_brand" class="form-control " name="model_brand" placeholder="Search Garages
                 " required="" type="text" value="">
             
             <div class="input-group-append">
@@ -42,15 +45,23 @@
 </div>
 {% endblock %}
 {% block body %}
-body meri
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+<span class=flashes>
+    {% for message in messages %}
+      {{ message }}
+    {% endfor %}
+</span>
+{% endif %}
+{% endwith %}
 {% endblock %}
 {% block scripts %}
 <script type=text/javascript>
 </script>
 <script>
     var availablemodels = [
-    {% for m in model_brand('Maruti').values() %}
-        "{{m}} (Maruti Suzuki Arena)",
+    {% for m in model_brand().values() %}
+        "{{m}}",
     {% endfor %}
 ]
 

@@ -8,13 +8,12 @@ def index():
 
 # ------------ TODO: use classes --------- #
 
-def models(brand):
-    if brand == 'Maruti':
-        return load_vehicles()['Model']
+@api.route('/cars', methods=['GET'])
+def show_model():
+    return load_vehicles(), 200
 
-@api.route('cars/<brand>', methods=['GET'])
-def show_model(brand):
-    if brand == 'Maruti':
-            return models(brand), 200
-    else:
-        return {'error': 'vehicle not found'}, 404
+@api.route('/cars/<gid>', methods=['GET'])
+def show_car_details(gid):
+    res1 = load_vehicles()['Company-Unique'][str(gid)]
+    res2 = str(load_vehicles()['Models'][str(gid)])
+    return {res1:res2}, 200
