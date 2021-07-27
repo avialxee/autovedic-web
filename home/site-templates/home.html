@@ -1,0 +1,58 @@
+{% extends "site-base.html" %}
+{% block title %} Home {% endblock %} 
+{% block style %}
+.nav-autovedic {
+    height: 50vh;
+}
+.input-group[class*="col-"] {
+    padding-right: 15px;
+    padding-left: 15px;
+}
+.input-group {
+    padding-top:5vh;
+    padding-left:2;
+    padding-right:2;
+}
+{% endblock %}
+{% block nav %}
+<div class="mx-auto control contents-wrapper d-flex justify-content-center ">
+    <form class="">
+        <div id="nav-autovedic" class="input-group input-group mt-5 ">
+            <div class="input-group-prepend ">
+                <button type="button" class="btn btn-outline-primary">Location</button>
+                <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">Rajajipuram</a>
+                    <a class="dropdown-item" href="#">Gomti Nagar</a>
+                </div>
+            </div>
+            
+            <input id="model_brand" class="typeahead form-control " name="model_brand" placeholder="Vehicle Model
+                " required="" type="text" value="">
+            
+            <div class="input-group-append">
+            <button id="submit" class="btn btn-outline-primary" name="submit" type="submit">Search</button>
+            </div>
+        </div>
+        
+    </form>
+</div>
+{% endblock %}
+{% block body %}
+body meri
+{% endblock %}
+{% block scripts %}
+<script type=text/javascript>
+</script>
+<script>
+    var availablemodels = [
+    {% for m in model_brand('Maruti').values() %}
+        "{{m}} (Maruti Suzuki Arena)",
+    {% endfor %}
+]
+
+</script>
+<script src="{{url_for('site.static', filename='js/search.js')}}"></script>
+{% endblock %}

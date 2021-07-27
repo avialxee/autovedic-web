@@ -1,0 +1,16 @@
+version: '3.5'
+
+networks:
+  app-autovedic:
+    driver: bridge
+
+services:
+  web:
+      image: autovedic:latest
+      build:
+        context: .
+        dockerfile: ./Dockerfile
+      ports:
+        - 5000:5000
+      networks:
+        - app-autovedic
