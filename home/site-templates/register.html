@@ -1,0 +1,71 @@
+<form method="post">
+    <div class="field">
+        <p class="has-icons-left">
+            <div class="">
+            {{form.firstname}}
+            <span class="icon is-small is-left">
+            </div>
+            
+            </span>
+        </p>
+    </div>
+    <div class="field">
+        <p class="has-icons-left">
+            <div class="">
+            {{form.lastname}}
+            <span class="icon is-small is-left">
+            </div>
+            
+            </span>
+        </p>
+    </div>
+    <div class="field">
+        <p class="has-icons-left">
+            <div class="">
+            {{form.username}}
+            <span class="icon is-small is-left">
+            </div>
+            
+            </span>
+        </p>
+    </div>
+    <div class="field">
+        <p class="has-icons-left">
+            <div class="">
+            {{form.email}}
+            <span class="icon is-small is-left">
+            </div>
+            
+            </span>
+        </p>
+    </div>
+    <div class="field">
+        <p class="has-icons-left">
+            <div class="">
+            {{form.password}}
+            <span class="icon is-small is-left">
+            </div>
+            
+            </span>
+        </p>
+    </div>
+    <div class="field">
+        <p class="has-icons-left">
+            <div class="">
+            {{form.submit}}
+            <span class="icon is-small is-left">
+            </div>
+            </span>
+        </p>
+    </div>
+
+</form>
+{% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <span class=flashes>
+            {% for message in messages %}
+            {{ message }}
+            {% endfor %}
+        </span>
+        {% endif %}
+{% endwith %}

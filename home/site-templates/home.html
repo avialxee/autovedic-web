@@ -1,70 +1,66 @@
 {% extends "site-base.html" %}
+
+<!-- title -->
 {% block title %} Home {% endblock %} 
+
+<!-- style -->
 {% block style %}
-.nav-autovedic {
-    height: 50vh;
-}
-.input-group[class*="col-"] {
-    padding-right: 15px;
-    padding-left: 15px;
-}
-.input-group {
-    padding-top:5vh;
-    padding-left:2;
-    padding-right:2;
-}
-.dropdown-item:hover {
-    cursor:pointer;
-}
-
-
+    .nav-autovedic {
+        height: 50vh;
+    }
+    .input-group[class*="col-"] {
+        padding-right: 15px;
+        padding-left: 15px;
+    }
+    .input-group {
+        padding-top:5vh;
+        padding-left:2;
+        padding-right:2;
+    }
+    .dropdown-item:hover {
+        cursor:pointer;
+    }
 {% endblock %}
+
+<!-- nav -->
 {% block nav %}
-<div class="mx-auto control contents-wrapper d-flex justify-content-center ">
-    <form class="" method="post">
-        <div id="nav-autovedic" class="input-group input-group-lg mt-5 ">
-            <div class="input-group-prepend ">
-                <button type="button" class="btn btn-outline-primary " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="bi bi-geo-alt"></i></button>
-                <span class="sr-only">Toggle Dropdown</span>
-                <div class="dropdown-menu">
-                    <span class="dropdown-item" >Rajajipuram</span>
-                    <span class="dropdown-item" >Gomti Nagar</span>
-                </div>
-            </div>
-            <input id="model_brand" class="form-control " name="model_brand" placeholder="Search Garages
-                " required="" type="text" value="">
-            
-            <div class="input-group-append">
-            
-            <button id="submit" class="btn btn-outline-primary" name="submit" type="submit">
-            <i class="bi bi-search"></i></button>
-            </div>
-        </div>
-        
-    </form>
-</div>
+    {% from 'macro.html' import search %}
+    {{search(id='model_brand', name='model_brand',placeholder='Search Garages', value='')}}
 {% endblock %}
-{% block body %}
-{% with messages = get_flashed_messages() %}
-  {% if messages %}
-<span class=flashes>
-    {% for message in messages %}
-      {{ message }}
-    {% endfor %}
-</span>
-{% endif %}
-{% endwith %}
-{% endblock %}
-{% block scripts %}
-<script type=text/javascript>
-</script>
-<script>
-    var availablemodels = [
-    {% for m in model_brand().values() %}
-        "{{m}}",
-    {% endfor %}
-]
 
-</script>
+<!-- body -->
+{% block body %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <span class=flashes>
+            {% for message in messages %}
+            {{ message }}
+            {% endfor %}
+        </span>
+        {% endif %}
+    {% endwith %}
+{% endblock %}
+
+<!-- scripts -->
+{% block scripts %} 
+    <script type=text/javascript>
+    </script>
+    <script>
+        var availablemodels = [
+        {% for m in model_brand().values() %}
+            "{{m}}",
+        {% endfor %}
+    ]
+
+    $(document).ready(function() {
+        $('#model_brand').autocomplete({
+            source: function(request, response){
+            var results = $.ui.autocomplete.filter(availablemodels, request.term);
+            response(results.slice(0, 5));
+            }
+            
+        })
+    });
+    </script>
 <script src="{{url_for('site.static', filename='js/search.js')}}"></script>
 {% endblock %}
