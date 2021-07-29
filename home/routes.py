@@ -3,7 +3,7 @@ from flask import Flask, flash, redirect, url_for,abort, render_template, reques
 from home.forms import SearchForm, LoginForm, RegisterForm
 from api.routes import show_model
 from classes.vehicles.vehicle import load_vehicles
-from is_safe_url import is_safe_url
+from classes.url import is_url_safe
 from flask_login import login_user, login_required
 from classes.login import User
 
@@ -36,6 +36,8 @@ def register():
     if request.method=='POST':
         flash('Registered!')
         next_url = request.args.get('next')
+        if not is_url_safe(next_url):
+            return abort(400)
         return redirect(next_url or url_for('site.index'))
     return render_template('register.html', form=form)
 
@@ -43,21 +45,14 @@ def register():
 def login():
     form = LoginForm()
     if request.method=='POST':
-        # Login and validate the user.
-        # user should be an instance of your `User` class
         user = User(id=1, name=request.form['username'],
                         password=request.form['password'])
         login_user(user)
-
         flash(f'hey! {user.name}')
-
-        next = request.args.get('next')
-        # is_safe_url should check if the url is safe for redirects.
-        # See http://flask.pocoo.org/snippets/62/ for an example.
-        #if not is_safe_url(next):
-        #    return abort(400)
-
-        return redirect(next or url_for('site.index'))
+        next_url = request.args.get('next')
+        if not is_url_safe(next_url):
+            return abort(400)
+        return redirect(next_url or url_for('site.index'))
     return render_template('login.html', form=form)
 
 @site.route('/lrq')

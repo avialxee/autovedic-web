@@ -4,5 +4,4 @@ WTForms
 requests
 pandas
 flask-login
-is_safe_url
 sqlalchemy
