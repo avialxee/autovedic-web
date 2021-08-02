@@ -1,3 +1,26 @@
-{% extends 'site-base.html' %}
+{% extends "site-base.html" %}
 
-{% block title %} Search Results {% endblock %} 
+{% block body %}
+
+<!-- title -->
+<div class="container p-2 mx-auto text-center">
+<h1>{% block title %} Search Result {% endblock %}</h1>
+</div>
+
+<!-- flash messages-->
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<div class="container">
+    <span class="flashes alert alert-success">
+        {% for message in messages %}
+        {{ message }}
+        {% endfor %}
+    </span>
+</div>
+{% endif %}
+{% endwith %}
+
+
+
+
+{% endblock %} <!-- body ends-->

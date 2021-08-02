@@ -5,12 +5,12 @@
             
             <div class="input-group-prepend ">
                 
-                <select id="service_id" class="form-control btn-outline-info" name="service_type" placeholder="Select Service" required="
+                <select id="service_type" class="form-control btn-outline-info" name="service_type" required="
                 " type="text" value=""><option value="none" selected disabled hidden>Service Type</option>
                 </select>
                 
             </div>
-            <select id="car_model" class=" form-control btn-outline-info" name="car_model" placeholder="Search Model" required="
+            <select id="service_sname" class=" form-control btn-outline-info" name="service_sname" required="
             " type="text" value="" style="width: 200px; max-width: 200px;" ><option value="none" selected disabled hidden>Select Service</option></select>
             <div class="input-group-append">
             
@@ -22,3 +22,112 @@
     </form>
 </div>
 {% endmacro %}
+
+{% macro search_apiform(url1='/api/maps/pincodes', tag1='map_pincode', url2='/api/maps/', key_response='Post office',tag2='map_postoffice' ) %}
+<script>
+    $(document).ready(function(){
+        var xhr2 = $.ajax({
+                    url: '{{url1}}',
+                    method: 'GET',
+                    statusCode: {
+                        200: function (response) {
+                            
+                            console.log(response)
+                            data = JSON.parse(response)
+                            for (var index = 0; index < data.length; index++) {
+                                $('#{{tag1}}').append('<option value="' + data[index] + '">' + data[index] + '</option>');
+                            }
+                        }
+                    }
+                })
+                
+                $('select[name="{{tag1}}"]').change(function(){
+                 // do whatever you want to do  
+                 var fetched = $('#{{tag1}}').find(":selected").text();
+                console.log(fetched);
+                
+           
+            $.ajax({
+                
+                    url: '{{url2}}' + fetched,
+                    method: 'GET',
+                    statusCode: {
+                        200: function (response) {
+                            dat = response['{{key_response}}'];
+                            data = Object.values(dat)
+                            //console.log(data.keys());
+                            $('#{{tag2}}').find('option').remove()
+                            for (var index = 0; index < data.length; index++) {
+                                console.log()
+                                $('#{{tag2}}').append('<option value="' + data[index] + '">' + data[index] + '</option>');
+                            }
+                        }
+                    }
+                })
+           
+                  });
+        
+
+    });
+
+
+    </script>
+    {% endmacro %}
+
+
+
+{% macro service_apiform(url1='/api/services/', tag1='service_type', url2='/api/services/id/', key_response='Service-sname',tag2='service_sname') %}
+<script>
+    $(document).ready(function(){
+        var xhr2 = $.ajax({
+                    url: '{{url1}}',
+                    method: 'GET',
+                    statusCode: {
+                        200: function (response) {
+                            
+                            
+                            data = Object.keys(JSON.parse(response))
+                            data_vals = Object.values(JSON.parse(response))
+                            //console.log(data)
+                            for (var index = 0; index < data.length; index++) {
+                                $('#{{tag1}}').append('<option value="' + data_vals[index] + '">' + data[index] + '</option>');
+                            }
+                        }
+                    }
+                })
+                
+                $('select[name="{{tag1}}"]').change(function(){
+                 // do whatever you want to do  
+                 //var fetched = $('#{{tag1}}').find(":selected").text();
+                 var fetched = $('#{{tag1}}').find(":selected").val();
+                //console.log(fetched);
+                
+           
+            $.ajax({
+                
+                    url: '{{url2}}' + fetched,
+                    method: 'GET',
+                    statusCode: {
+                        200: function (response) {
+                            dat = response['{{key_response}}'];
+                            gid = response['Service-gid']
+                            data = Object.values(dat)
+                            gid_val = Object.values(gid)
+                            //console.log(data.keys());
+                            $('#{{tag2}}').find('option').remove()
+                            for (var index = 0; index < data.length; index++) {
+                                //console.log()
+                                $('#{{tag2}}').append('<option value="' + gid_val[index] + '">' + data[index] + '</option>');
+                            }
+                        }
+                    }
+                })
+           
+                  });
+        
+
+    });
+
+
+    </script>
+    {% endmacro %}

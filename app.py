@@ -32,6 +32,7 @@ def create_app():
 #app.register_blueprint(site)
 
 app = create_app()
+app.url_map.strict_slashes = False
 
 # ======== Main ============================================================== #
 if __name__ == "__main__":

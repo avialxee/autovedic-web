@@ -120,6 +120,8 @@
 
 <!-- scripts -->
 {% block scripts %} 
-    
+{% from 'macro.html' import service_apiform %}
+{{ service_apiform() }}
+
 <script src="{{url_for('site.static', filename='js/search.js')}}"></script>
 {% endblock %}

@@ -40,7 +40,7 @@ def index():
     if request.method == 'POST':
         #flash('selected {}'.format(request.form['model_brand']))
         session['search'] = 'vendor-search'
-        return redirect(url_for('site.search_result'))
+        return redirect(url_for('site.search_result', service_gid=request.form['service_sname']))
     return render_template('home.html', content=sfield)
 
 @site.route('/select-vehicle', methods=['GET', 'POST'])
@@ -61,7 +61,7 @@ def select_vehicle():
 @login_required
 def select_location():
     if request.method == 'POST':
-        current_user.pincode = request.form['pincode']
+        current_user.pincode = request.form['map_pincode']
         db_session.commit()
         next_url = request.args.get('next')
         if not is_url_safe(next_url):
@@ -71,16 +71,15 @@ def select_location():
     return render_template('select_location.html')
 
 
-@site.route('/search-services', methods=['GET', 'POST'])
-def search_services():
-    return render_template('search_services.html')
-
-@site.route('/s', methods=['GET','POST'])
+@site.route('/s/<service_gid>', methods=['GET','POST'])
 @login_required
-def search_result():
-    if session['search'] == 'vendor-search':
-        sfield = request.form.get('model')
-        return render_template('vendor_search_result.html')
+def search_result(service_gid):
+    if 'search' in session:
+        if session['search'] == 'vendor-search':
+            flash (f'{service_gid}:working')
+    else :
+        abort(400)
+    return render_template('vendor_search_result.html')
 
 # TODO: make single user registration and login page
 @site.route('/register', methods=['GET', 'POST'])

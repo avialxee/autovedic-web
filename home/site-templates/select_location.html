@@ -13,12 +13,12 @@
                     
                     <div class="input-group-prepend ">
                         
-                        <select id="car_brand" class="form-control btn-outline-primary" name="car_brand" placeholder="Search Brands" required="
+                        <select id="map_pincode" class="form-control btn-outline-primary" name="map_pincode" required="
                         " type="text" value=""><option value="none" selected disabled hidden>Select Pincode</option>
                         </select>
                         
                     </div>
-                    <select id="car_model" class=" form-control btn-outline-primary" name="car_model" placeholder="Search Model" required="
+                    <select id="map_postoffice" class=" form-control btn-outline-primary" name="map_postoffice" required="
                     " type="text" value="" style="width: 200px; max-width: 200px;" ><option value="none" selected disabled hidden>Select Area</option></select>
                     <div class="input-group-append">
                     
@@ -34,62 +34,7 @@
 
 
 {% block scripts %}  <!-- body ends-->
-    <script>
-        $(document).ready(function() {
-        $('#model_brand').autocomplete({
-            source: function(request, response){
-            var results = $.ui.autocomplete.filter(availablemodels, request.term);
-            response(results.slice(0, 5));
-            }
-            
-        })
-    });
-
-    $(document).ready(function(){
-        var xhr2 = $.ajax({
-                    url: '/api/cars/brands',
-                    method: 'GET',
-                    statusCode: {
-                        200: function (response) {
-                            data = JSON.parse(response)
-                            //console.log(data[0])
-                            for (var index = 0; index < data.length; index++) {
-                                $('#car_brand').append('<option value="' + data[index] + '">' + data[index] + '</option>');
-                            }
-                        }
-                    }
-                })
-                
-                $('select[name="car_brand"]').change(function(){
-                 // do whatever you want to do  
-                 var brand = $('#car_brand').find(":selected").text();
-                console.log(brand);
-                
-           
-            $.ajax({
-                
-                    url: '/api/cars/' + brand,
-                    method: 'GET',
-                    statusCode: {
-                        200: function (response) {
-                            dat = response['Models'];
-                            data = Object.values(dat)
-                            //console.log(data.keys());
-                            $('#car_model').find('option').remove()
-                            for (var index = 0; index < data.length; index++) {
-                                console.log()
-                                $('#car_model').append('<option value="' + data[index] + '">' + data[index] + '</option>');
-                            }
-                        }
-                    }
-                })
-           
-                  });
-        
-
-    });
-
-
-    </script>
+{% from 'macro.html' import search_apiform %}
+{{ search_apiform() }}
 
 {% endblock %} <!-- script ends-->
