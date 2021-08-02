@@ -57,24 +57,24 @@
         </div>
         <div class="field">
             <p class="has-icons-left">
-                <div class="">
-                {{form.submit}}
-                <span class="icon is-small is-left">
-                </div>
-                </span>
+                <button type="submit" class="btn btn-secondary" name="login" value="Login">Login</button>
+                <span>Register <a href="{{url_for('site.register')}}">here</a></span>
             </p>
         </div>
-
+        <div>
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                <span class="flashes text-center alert alert-info">
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                </span>
+                {% endif %}
+            {% endwith %}
+        </div>
     </form>
+    
 </div>
-{% with messages = get_flashed_messages() %}
-        {% if messages %}
-        <span class=flashes>
-            {% for message in messages %}
-            {{ message }}
-            {% endfor %}
-        </span>
-        {% endif %}
-{% endwith %}
+
 
 {% endblock %} <!-- body -->

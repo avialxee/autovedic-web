@@ -68,7 +68,11 @@ class User(Base, UserMixin):
         return self.userid
 
     def is_anonymous(self):
-        return False
+        if self.auth == True:
+            return False
+        else:
+            return True 
+
 
 class Role(Base):
     __tablename__ = 'roles'

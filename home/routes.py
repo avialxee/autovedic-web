@@ -40,7 +40,7 @@ def index():
     if request.method == 'POST':
         #flash('selected {}'.format(request.form['model_brand']))
         session['search'] = 'vendor-search'
-        return redirect(url_for('site.search_result', model=request.form['model_brand']))
+        return redirect(url_for('site.search_result'))
     return render_template('home.html', content=sfield)
 
 @site.route('/select-vehicle', methods=['GET', 'POST'])
@@ -56,6 +56,24 @@ def select_vehicle():
             return abort(400)
         return redirect(next_url or url_for('site.index'))
     return render_template('select_vehicle.html')
+
+@site.route('/select-location', methods=['GET', 'POST'])
+@login_required
+def select_location():
+    if request.method == 'POST':
+        current_user.pincode = request.form['pincode']
+        db_session.commit()
+        next_url = request.args.get('next')
+        if not is_url_safe(next_url):
+            return abort(400)
+        return redirect(next_url or url_for('site.index'))
+
+    return render_template('select_location.html')
+
+
+@site.route('/search-services', methods=['GET', 'POST'])
+def search_services():
+    return render_template('search_services.html')
 
 @site.route('/s', methods=['GET','POST'])
 @login_required
@@ -102,7 +120,7 @@ def login():
                 db_session.add(user)
                 db_session.commit()
                 login_user(user, remember=True)
-                flash(f'hey! {user.email}')
+                
             else:
                 flash('wrong password!')
         else:
@@ -110,7 +128,7 @@ def login():
         next_url = request.args.get('next')
         if not is_url_safe(next_url):
             return abort(400)
-        return redirect(next_url or url_for('site.user_profile') or url_for('site.index'))
+        return redirect(next_url or url_for('site.user_account') or url_for('site.index'))
     return render_template('login.html', form=form)
 
 @site.route('/logout', methods=['GET'])
@@ -122,8 +140,8 @@ def logout():
 
 @site.route('/account', methods=['GET', 'POST'])
 @login_required
-def user_profile():
-    return render_template('user_profile.html')
+def user_account():
+    return render_template('user_account.html')
 
 @site.route('/lrq')
 @login_required

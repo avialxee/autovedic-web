@@ -1,3 +1,24 @@
-{% macro search_vehicle(id='model_brand',brand_name='', name='model_brand',placeholder_brand='Select Brand',placeholder='Vehicle Model',value_brand='', value='')%}
-
+{% macro search_services() %}
+<div class="contents-wrapper d-flex justify-content-center search-autovedic">
+    <form class="pb-4" method="post">
+        <div id="" class="input-group ">
+            
+            <div class="input-group-prepend ">
+                
+                <select id="service_id" class="form-control btn-outline-info" name="service_type" placeholder="Select Service" required="
+                " type="text" value=""><option value="none" selected disabled hidden>Service Type</option>
+                </select>
+                
+            </div>
+            <select id="car_model" class=" form-control btn-outline-info" name="car_model" placeholder="Search Model" required="
+            " type="text" value="" style="width: 200px; max-width: 200px;" ><option value="none" selected disabled hidden>Select Service</option></select>
+            <div class="input-group-append">
+            
+            <button id="submit" class="btn btn-outline-success" name="submit" type="submit">
+            <i class="fas fa-search"></i></button>
+            </div>
+        </div>
+        
+    </form>
+</div>
 {% endmacro %}

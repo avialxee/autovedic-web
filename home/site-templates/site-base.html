@@ -10,19 +10,25 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.min.css">
     <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     {% block head %}
     {% endblock %}
     <title>{% block title %}{% endblock %} - Autovedic </title>
     <style>
       {% block style %}{% endblock %}
-      .nav-autovedic{
-        background-image: url("{{url_for('site.static', filename='media/banner.jpg')}}");
+      .search-autovedic {
+        padding: 5vh;
+        /*background-color: rgba(100,50,10, 0.2);*/
+        display:inline-block;
+        opacity: 0.8;
         background-position:bottom;
-        background-size:cover;
-        background-blend-mode: color-dodge;
-        background-color:rgba(0, 0, 0, 0.4);
-        text-align: center;
+        background-image: url("{{url_for('site.static',filename='media/banner.jpg')}}");
+    }
+      .autovedic-header{
+        background:rgba(151, 151, 151, 0.2);
+        background-position-y: bottom;
+        
       }
       .jumbo-autovedic {
         background: none;
@@ -30,80 +36,52 @@
       .navbar-brand {
         font-size: 6.5vh;
       }
-
+      .autovedic-logo {
+        width: 20vw;
+      }
+      ul.contact-info {
+        text-align: center;
+      }
+      ul.contact-info > li {
+        display: inline-flex;
+        list-style: none;
+      }
+      ul#selected_car.dropdown {
+        position:inline-block;
+        position:relative;
+      }
+      .dropdown-content {
+        display: none;
+        position:absolute;
+        
+      }
+      .dropdown-content span{
+        position: absolute;
+        right: 0;
+        bottom:0.5;
+        top:0;
+        color:lightcoral;
+        background-color: #f9f9f9;
+        min-width: 150px;
+        box-shadow: 0px 8px 16px 0px rgba(151, 151, 151, 0.2);
+        z-index: 1;
+        
+      }
+      .dropdown:hover  .dropdown-content {
+        display: block;
+      }
     </style>
   </head>
   <body>
-    <!--div class="text-fluid alert alert-secondary small m-0 p-0 text-right pb-1" role="alert" >
-      contact : <a href="mailto:autovedic@gmail.com">autovedic@gmail.com</a>
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="font-size: 1.2rem !important;">
+    <div class="text-fluid alert alert-secondary small m-0 p-0 pr-3 text-right pb-1" role="alert" >
+      contact : <a href="mailto:support@autovedic.com">support@autovedic.com</a>
+      <!--button type="button" class="close" data-dismiss="alert" aria-label="Close" style="font-size: 1.2rem !important;">
         <span class=" pl-5 pr-1 m-0 small" aria-hidden="true" >&times;</span>
-      </button>
-    </div-->
-
-    <!-- navbar - begins -->
-    <div class="nav-autovedic">
-      <nav class="navbar navbar-dark " >
-      <ul class="navbar-nav ml-auto text-right">
-        <li class="nav-item">
-            {% if current_user.last_vehicle_model_nm %}
-              <a class="nav-link" href="{{url_for('site.select_vehicle')}}">{{ current_user.last_vehicle_model_nm }}</a>
-            {% else %}
-            <a class="nav-link" href="{{url_for('site.select_vehicle')}}">Vehicle</a>
-            {% endif %}
-        </li>
-        <!--li class="nav-item">
-          <a class="nav-link" href="#">Location</a>
-      </li-->
-        
-      </ul>
-    </nav>
-      <nav class="navbar navbar-expand-md collapse navbar-dark " >
-        <div class="navbar-expand navbar-collapse collapse  w-100 order-3 dual-collapse2">
-          <div class="mr-auto order-1">
-            <div class="jumbo-autovedic">
-              <a class="navbar-brand mx-auto" href="{{ url_for('site.index')}}">AUTOVEDIC</a>
-            </div>
-          </div>
-            <ul class="navbar-nav ml-auto order-1">
-                {% if current_user.is_authenticated %}
-                  <li class="nav-item"> 
-                    <a class="nav-link" href="{{url_for('site.user_profile')}}"> Account
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link" href="{{url_for('site.logout')}}">Log Out</a>
-                  </li>
-                {% else %}
-                  <li class="nav-item">
-                      <a class="nav-link" href="{{url_for('site.login')}}">Log In</a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link" href="{{url_for('site.register')}}">Sign Up</a>
-                  </li>
-                {% endif %}
-            </ul>
-        </div>
-        
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
-          <span class="navbar-toggler-icon"></span>
-      </button>
-        
-      </nav> <!-- navbar ends-->
-      
-        <nav class="navbar navbar-expand-md navbar-dark">
-          
-            
-          
-        </nav>
-        
-      {% block nav %}{% endblock %}
+      </button-->
     </div>
 
-
-
-
-
+    <!-- navbar - begins -->
+    {% include 'header.html' %}
     {% block body %}
     {% endblock %}
     

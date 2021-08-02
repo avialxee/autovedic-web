@@ -1,0 +1,95 @@
+{% extends "site-base.html" %}
+
+{% block body %}
+    {% block select_vehicle %}
+    <!-- title -->
+        <div class="container p-2 mx-auto text-center">
+            <h1>{% block title %} Select Vehicle{% endblock %}</h1>
+        </div>
+
+        <div class="mx-auto control contents-wrapper d-flex justify-content-center ">
+            <form class="" method="post">
+                <div id="nav-autovedic" class="input-group  mt-5 ">
+                    
+                    <div class="input-group-prepend ">
+                        
+                        <select id="car_brand" class="form-control btn-outline-primary" name="car_brand" placeholder="Search Brands" required="
+                        " type="text" value=""><option value="none" selected disabled hidden>Select Pincode</option>
+                        </select>
+                        
+                    </div>
+                    <select id="car_model" class=" form-control btn-outline-primary" name="car_model" placeholder="Search Model" required="
+                    " type="text" value="" style="width: 200px; max-width: 200px;" ><option value="none" selected disabled hidden>Select Area</option></select>
+                    <div class="input-group-append">
+                    
+                    <button id="submit" class="btn btn-outline-success" name="submit" type="submit">
+                    <i class="bi bi-check2"></i></button>
+                    </div>
+                </div>
+                
+            </form>
+        </div>
+    {% endblock %}
+{% endblock %}
+
+
+{% block scripts %}  <!-- body ends-->
+    <script>
+        $(document).ready(function() {
+        $('#model_brand').autocomplete({
+            source: function(request, response){
+            var results = $.ui.autocomplete.filter(availablemodels, request.term);
+            response(results.slice(0, 5));
+            }
+            
+        })
+    });
+
+    $(document).ready(function(){
+        var xhr2 = $.ajax({
+                    url: '/api/cars/brands',
+                    method: 'GET',
+                    statusCode: {
+                        200: function (response) {
+                            data = JSON.parse(response)
+                            //console.log(data[0])
+                            for (var index = 0; index < data.length; index++) {
+                                $('#car_brand').append('<option value="' + data[index] + '">' + data[index] + '</option>');
+                            }
+                        }
+                    }
+                })
+                
+                $('select[name="car_brand"]').change(function(){
+                 // do whatever you want to do  
+                 var brand = $('#car_brand').find(":selected").text();
+                console.log(brand);
+                
+           
+            $.ajax({
+                
+                    url: '/api/cars/' + brand,
+                    method: 'GET',
+                    statusCode: {
+                        200: function (response) {
+                            dat = response['Models'];
+                            data = Object.values(dat)
+                            //console.log(data.keys());
+                            $('#car_model').find('option').remove()
+                            for (var index = 0; index < data.length; index++) {
+                                console.log()
+                                $('#car_model').append('<option value="' + data[index] + '">' + data[index] + '</option>');
+                            }
+                        }
+                    }
+                })
+           
+                  });
+        
+
+    });
+
+
+    </script>
+
+{% endblock %} <!-- script ends-->
