@@ -1,37 +1,72 @@
-<form method="post">
-    <div class="field">
-        <p class="has-icons-left">
-            <div class="">
-            {{form.username}}
-            <span class="icon is-small is-left">
-            </div>
-            
-            </span>
-        </p>
-    </div>
-    <div class="field">
-        <p class="has-icons-left">
-            <div class="">
-            {{form.password}}
-            <span class="icon is-small is-left">
-            </div>
-            
-            </span>
-        </p>
-    </div>
-    <div class="field">
-        <p class="has-icons-left">
-            <div class="">
-            {{form.submit}}
-            <span class="icon is-small is-left">
-            </div>
-            
-            </span>
-        </p>
-    </div>
+{% extends "site-base.html" %}
+<!-- title -->
 
-</form>
+{% block body %}
+<h2 class="text-center m-4">{% block title %} Login {% endblock %}  </h2>
+<div class="mx-auto container registration  form-row ">
+    <form method="post" class="mx-auto">
+        <div class="field form-group control">
+            <p class="has-icons-left">
+                <div class="">
+                {{form.firstname}}
+                <span class="icon is-small is-left">
+                </div>
+                
+                </span>
+            </p>
+        </div>
+        <div class="field">
+            <p class="has-icons-left">
+                <div class="">
+                {{form.lastname}}
+                <span class="icon is-small is-left">
+                </div>
+                
+                </span>
+            </p>
+        </div>
+        <div class="field">
+            <p class="has-icons-left">
+                <div class="">
+                {{form.username}}
+                <span class="icon is-small is-left">
+                </div>
+                
+                </span>
+            </p>
+        </div>
+        <div class="field">
+            <p class="has-icons-left">
+                <div class="">
+                {{form.email}}
+                <span class="icon is-small is-left">
+                </div>
+                
+                </span>
+            </p>
+        </div>
+        <div class="field">
+            <p class="has-icons-left">
+                <div class="">
+                {{form.password}}
+                <span class="icon is-small is-left">
+                </div>
+                
+                </span>
+            </p>
+        </div>
+        <div class="field">
+            <p class="has-icons-left">
+                <div class="">
+                {{form.submit}}
+                <span class="icon is-small is-left">
+                </div>
+                </span>
+            </p>
+        </div>
 
+    </form>
+</div>
 {% with messages = get_flashed_messages() %}
         {% if messages %}
         <span class=flashes>
@@ -41,3 +76,5 @@
         </span>
         {% endif %}
 {% endwith %}
+
+{% endblock %} <!-- body -->

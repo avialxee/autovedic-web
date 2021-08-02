@@ -24,8 +24,7 @@
 
 <!-- nav -->
 {% block nav %}
-    {% from 'macro.html' import search %}
-    {{search(id='model_brand', name='model_brand',placeholder='Search Garages', value='')}}
+    
 {% endblock %}
 
 <!-- body -->
@@ -43,24 +42,6 @@
 
 <!-- scripts -->
 {% block scripts %} 
-    <script type=text/javascript>
-    </script>
-    <script>
-        var availablemodels = [
-        {% for m in model_brand().values() %}
-            "{{m}}",
-        {% endfor %}
-    ]
-
-    $(document).ready(function() {
-        $('#model_brand').autocomplete({
-            source: function(request, response){
-            var results = $.ui.autocomplete.filter(availablemodels, request.term);
-            response(results.slice(0, 5));
-            }
-            
-        })
-    });
-    </script>
+    
 <script src="{{url_for('site.static', filename='js/search.js')}}"></script>
 {% endblock %}

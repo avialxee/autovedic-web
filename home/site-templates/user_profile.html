@@ -1,0 +1,27 @@
+{% extends "site-base.html" %}
+
+<!-- title -->
+{% block title %} {{ current_user.fullname }} {% endblock %} 
+
+{% block body %}
+<div class="container text-center">
+    <div>
+        {{current_user.fullname}}
+    </div>
+    <div>
+        {{current_user.email}}
+    </div>
+    <div>
+        {{current_user.name}}
+    </div>
+    <div>
+        {{current_user.created_at}}
+    </div>
+    <div>
+        {{current_user.updated_at}}
+    </div>
+    <div>
+        {{current_user.last_vehicle_model_nm}}
+    </div>
+</div>
+{% endblock %}

@@ -34,47 +34,69 @@
     </style>
   </head>
   <body>
+    <!--div class="text-fluid alert alert-secondary small m-0 p-0 text-right pb-1" role="alert" >
+      contact : <a href="mailto:autovedic@gmail.com">autovedic@gmail.com</a>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="font-size: 1.2rem !important;">
+        <span class=" pl-5 pr-1 m-0 small" aria-hidden="true" >&times;</span>
+      </button>
+    </div-->
+
     <!-- navbar - begins -->
     <div class="nav-autovedic">
-      <nav class="navbar navbar-expand-md navbar-dark " >
-        <div class="navbar-collapse collapse w-100 order-0">
-            <ul class="navbar-nav mr-auto">
-                <!--li class="nav-item">
-                    <a class="nav-link" href="#">Vehicle</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Location</a>
-              </li-->
-                
+      <nav class="navbar navbar-dark " >
+      <ul class="navbar-nav ml-auto text-right">
+        <li class="nav-item">
+            {% if current_user.last_vehicle_model_nm %}
+              <a class="nav-link" href="{{url_for('site.select_vehicle')}}">{{ current_user.last_vehicle_model_nm }}</a>
+            {% else %}
+            <a class="nav-link" href="{{url_for('site.select_vehicle')}}">Vehicle</a>
+            {% endif %}
+        </li>
+        <!--li class="nav-item">
+          <a class="nav-link" href="#">Location</a>
+      </li-->
+        
+      </ul>
+    </nav>
+      <nav class="navbar navbar-expand-md collapse navbar-dark " >
+        <div class="navbar-expand navbar-collapse collapse  w-100 order-3 dual-collapse2">
+          <div class="mr-auto order-1">
+            <div class="jumbo-autovedic">
+              <a class="navbar-brand mx-auto" href="{{ url_for('site.index')}}">AUTOVEDIC</a>
+            </div>
+          </div>
+            <ul class="navbar-nav ml-auto order-1">
+                {% if current_user.is_authenticated %}
+                  <li class="nav-item"> 
+                    <a class="nav-link" href="{{url_for('site.user_profile')}}"> Account
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="{{url_for('site.logout')}}">Log Out</a>
+                  </li>
+                {% else %}
+                  <li class="nav-item">
+                      <a class="nav-link" href="{{url_for('site.login')}}">Log In</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="{{url_for('site.register')}}">Sign Up</a>
+                  </li>
+                {% endif %}
             </ul>
         </div>
-        <div class="navbar-expand navbar-collapse w-100 order-3 ">
-          <ul class="navbar-nav ml-auto">
-              <li class="nav-item">
-                  <a class="nav-link" href="{{url_for('site.login')}}">Log In</a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link" href="#">Sign Up</a>
-              </li>
-          </ul>
-        </div>
         
-        <!--button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
           <span class="navbar-toggler-icon"></span>
-      </button-->
+      </button>
         
       </nav> <!-- navbar ends-->
-      <div class="jumbo-autovedic">
+      
         <nav class="navbar navbar-expand-md navbar-dark">
-          <div class="mx-auto order-1">
-            <a class="navbar-brand mx-auto" href="#">Autovedic</a>
-            
-          </div>
+          
             
           
         </nav>
         
-      </div>
       {% block nav %}{% endblock %}
     </div>
 
