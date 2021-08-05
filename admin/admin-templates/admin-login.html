@@ -1,4 +1,4 @@
-{% extends "site-base.html" %}
+{% extends "admin/master.html" %}
 <!-- title -->
 
 {% block body %}
@@ -70,7 +70,7 @@
         <div class="field">
             <p class="has-icons-left">
                 <button type="submit" class="btn btn-secondary" name="login" value="Login">Login</button>
-                <span>Register <a href="{{url_for('site.register')}}">here</a></span>
+                <span>Register <a href="{{url_for('admin_bp.admin_register')}}">here</a></span>
             </p>
         </div>
         

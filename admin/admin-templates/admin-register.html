@@ -1,7 +1,7 @@
-{% extends "site-base.html" %}
+{% extends "admin/master.html" %}
 
 {% block body %}
-<h2 class="text-center m-4">{% block title %} Sign Up {% endblock %} </h2>
+<h2 class="text-center m-4">{% block title %} Admin Sign Up {% endblock %} </h2>
 {% with messages = get_flashed_messages() %}
         {% if messages %}
             <div class=" alert alert-info w-25 mx-auto">
@@ -79,7 +79,7 @@
             <div class="field">
                 <p class="has-icons-left">
                     <button type="submit" class="btn btn-secondary" name="login" value="Login">Register</button>
-                    <span>Login <a href="{{url_for('site.login')}}">here</a></span>
+                    <span>Login <a href="{{url_for('admin_bp.admin_login')}}">here</a></span>
                 </p>
             </div>
             

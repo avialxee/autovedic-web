@@ -19,4 +19,5 @@ class RegisterForm(Form):
     email = StringField('Email ',  render_kw={"placeholder": "Email"}, validators=[validators.Email(), validators.required()])
     username = StringField('Username ', render_kw={"placeholder": "username"}, validators=[validators.required(), validators.Length(min=2, max=20)])
     password = PasswordField('Password ', render_kw={"placeholder": "Enter password"}, validators=[validators.required(), validators.Length(min=2, max=20)])
+    repassword = PasswordField('repassword ', render_kw={"placeholder": "Re-enter password"}, validators=[validators.required(), validators.Length(min=2, max=20)])
     submit = SubmitField('Login')

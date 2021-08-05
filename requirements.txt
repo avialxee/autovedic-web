@@ -5,3 +5,6 @@ requests
 pandas
 flask-login
 sqlalchemy
+bcrypt
+Flask-mail
+python-dotenv

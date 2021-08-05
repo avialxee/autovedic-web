@@ -58,11 +58,7 @@ class User(Base, UserMixin):
         return True
 
     def is_authenticated(self):
-        if self.name == 'avialxee':
-            self.is_auth =True
-            return self.is_auth
-        else :
-            return False
+        return self.is_auth
 
     def get_id(self):
         return self.userid
@@ -72,6 +68,9 @@ class User(Base, UserMixin):
             return False
         else:
             return True 
+
+    def is_administrator(self):
+        return self.is_admin
 
 
 class Role(Base):
@@ -96,3 +95,44 @@ class Role(Base):
 
     def is_root(self):
         return False
+
+class BackendAdmin(UserMixin, Base):
+    query = db_session.query_property()
+    __tablename__ = 'admins'
+    __table_args__ = {'extend_existing': True}
+    
+    # primary keys are required by SQLAlchemy
+    adminid = Column(Integer, primary_key=True) 
+
+    # details
+    email = Column(String(60), unique=True, nullable=False)
+    mobile = Column(String(15), unique=True)
+    fullname = Column(String(100))
+
+    # auth
+    password = Column(String(100))
+    name = Column(String(15), unique=True, nullable=False)
+
+    # roles
+    is_admin = Column(Boolean, default=False)
+    is_content_creator = Column(Boolean, default=False)
+    is_auth = Column(Boolean, default=False)    
+    is_active = is_auth = Column(Boolean, default=False)
+
+    def is_active(self):
+        return self.is_active
+
+    def is_authenticated(self):
+        return self.is_auth
+
+    def get_id(self):
+        return self.adminid
+
+    def is_anonymous(self):
+        if self.auth == True:
+            return False
+        else:
+            return True 
+
+    def is_administrator(self):
+        return self.is_admin
