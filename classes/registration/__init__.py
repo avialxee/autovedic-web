@@ -70,8 +70,7 @@ class User(Base, UserMixin):
             return True 
 
     def is_administrator(self):
-        return self.is_admin
-
+        return False
 
 class Role(Base):
     __tablename__ = 'roles'

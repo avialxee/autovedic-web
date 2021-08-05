@@ -14,7 +14,7 @@ class AdminTemplatesView(BaseView):
 class AdminModelView(ModelView):
     def is_accessible(self):        
         if current_user.is_authenticated:
-            return current_user.is_admin
+            return current_user.is_administrator
         else:
             return False
     
@@ -31,22 +31,18 @@ def register_admin(db_session):
 class AdminDashboard(AdminIndexView):
     def is_accessible(self):        
         if current_user.is_authenticated:
-            return current_user.is_admin
+            return current_user.is_administrator
         else:
             return False
     
     def inaccessible_callback(self, name, **kwargs):
         abort(404)
-    
-    
-
-
-        
+            
 admin = Admin(name='Dashboard', template_mode='bootstrap4', index_view=AdminDashboard())
 class AnalyticsView(BaseView):
     #def is_accessible(self):
     #    if current_user.is_authenticated:
-    #        return current_user.is_admin
+    #        return current_user.is_administrator
     #    else:
     #        return False
     #from .routes import admin_bp
@@ -58,7 +54,7 @@ class AnalyticsView(BaseView):
 class VendorView(BaseView):
     #def is_accessible(self):
     #    if current_user.is_authenticated:
-    #        return current_user.is_admin
+    #        return current_user.is_administrator
     #    else:
     #        return False
     #from .routes import admin_bp
