@@ -9,3 +9,4 @@ bcrypt
 Flask-mail
 python-dotenv
 flask_admin
+email_validator
