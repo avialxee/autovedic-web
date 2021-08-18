@@ -2,8 +2,6 @@ import os
 from flask_login import LoginManager
 from flask import Flask
 from settings import MAIL_SERVER,MAIL_PORT,MAIL_USE_TLS,MAIL_USERNAME,MAIL_PASSWORD
-from flask_admin import Admin
-
 
 
 def create_app():
