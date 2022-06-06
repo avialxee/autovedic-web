@@ -69,10 +69,10 @@ def create_app():
     return app
 
 
-app = create_app()
+application = create_app()
 
 
 
 # ======== Main ============================================================== #
 if __name__ == "__main__":
-    app.run(debug=True, use_reloader=True, port=5000)
+    application.run(debug=True, use_reloader=True, port=5000)

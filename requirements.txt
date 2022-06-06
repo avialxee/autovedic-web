@@ -1,6 +1,6 @@
-flask
+flask==2.1.2
 gunicorn
-WTForms
+WTForms==2.3.3
 requests
 pandas
 flask-login

@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, session, send_from_directory
 from flask import flash, redirect, url_for,abort, render_template, request
-from home.forms import SearchForm, LoginForm, RegisterForm
+from home.forms import SearchForm, LoginForm, RegisterForm, ContactUsForm
 from api.routes import show_model
 from classes.url import is_url_safe
 from flask_login import login_user, login_required, logout_user, current_user
@@ -38,12 +38,15 @@ def auth_root(f):
 # ROUTES
 @site.route('/', methods=['GET', 'POST'])
 def index():
-    sfield = SearchForm(request.form)
+    sform = SearchForm(request.form)
+    cform = ContactUsForm()
+
     if request.method == 'POST':
         #flash('selected {}'.format(request.form['model_brand']))
         session['search'] = 'vendor-search'
         return redirect(url_for('site.search_result', service_gid=request.form['service_sname']))
-    return render_template('home.html', content=sfield)
+    return render_template('home.html', content=sform, cform=cform)
+
 
 # TODO: write this properly
 @site.route('/test-mail',methods=['GET', 'POST'])
@@ -185,3 +188,10 @@ def root_media(filename):
             os.path.join('home'+url_for('site.static',filename='/rootmedia'), ''),
             filename
         )
+
+
+# miscelleneous
+@site.route('/contact-us')
+def contactus():
+    form = ContactUsForm()
+    return render_template('contact_us.html', form=form)

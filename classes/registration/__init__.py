@@ -1,6 +1,6 @@
 from re import L
 from sqlalchemy.sql.sqltypes import Boolean, DateTime, FLOAT
-from wtforms.fields.core import DateField
+from wtforms.fields import DateField
 from flask_login import UserMixin
 from sqlalchemy import Table, Column, Integer, String
 from sqlalchemy.sql import func

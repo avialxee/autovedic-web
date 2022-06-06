@@ -1,7 +1,5 @@
-from wtforms import Form, StringField, validators, DecimalField, SelectField
-
+from wtforms import Form, StringField, validators, DecimalField, SelectField, TextAreaField
 from wtforms.fields.simple import PasswordField, SubmitField
-
 
 class SearchForm(Form) :
     vehicle = SelectField(u'Vehicle ', choices=[(1, 'Car'), (2, 'Bikes')])
@@ -21,3 +19,10 @@ class RegisterForm(Form):
     password = PasswordField('Password ', render_kw={"placeholder": "Enter password"}, validators=[validators.required(), validators.Length(min=2, max=20)])
     repassword = PasswordField('repassword ', render_kw={"placeholder": "Re-enter password"}, validators=[validators.required(), validators.Length(min=2, max=20)])
     submit = SubmitField('Login')
+
+class ContactUsForm(Form):
+    fullname = StringField('Full Name', render_kw={"placeholder": "Full Name"}, validators=[validators.required(), validators.Length(min=2,max=40)])
+    email = StringField('Email ',  render_kw={"placeholder": "Email"}, validators=[validators.Email(), validators.required()])
+    phone = StringField('Phone ',  render_kw={"placeholder": "Phone"}, validators=[validators.Email(), validators.required()])
+    message = TextAreaField('Message', render_kw={'placeholder':'Message'})
+    submit = SubmitField('Send')

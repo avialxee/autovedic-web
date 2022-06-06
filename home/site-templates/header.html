@@ -81,7 +81,7 @@
 
                     <div id="primary-nav" class="">
                         <ul id="main-menu" class="navbar-nav">
-                            <li id=""
+                            <!-- <li id=""
                                 class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Home</a>
                                 <ul class="dropdown-menu">
@@ -107,6 +107,10 @@
                                             four</a></li>
                                 </ul>
                                 
+                            </li> -->
+                            <li id=""
+                                class=" nav-item">
+                                <a href="{{url_for('site.index')}}" class="nav-link">Home</a>
                             </li>
                             <li id=""
                                 class="nav-item dropdown">
@@ -209,7 +213,7 @@
                             </li>
                             <li id=""
                                 class=" nav-item">
-                                <a href="" class="nav-link">Contact</a>
+                                <a href="{{url_for('site.contactus')}}" class="nav-link">Contact</a>
                             </li>
                         </ul>
                     </div>

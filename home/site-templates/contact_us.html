@@ -1,0 +1,69 @@
+{% extends "site-base.html" %} 
+
+<!-- style -->
+{% block style %}
+    form textarea#message {
+        width: 100%;
+        height: 30vh;
+        min-width: 20px;
+    }
+    
+    #contact{
+    background-color: #70c3be;
+    letter-spacing: 2px;
+    }
+    #contact a{
+    color: #fff;
+    text-decoration: none;
+    }
+
+
+    @media (max-width: 575.98px) {
+
+    #contact{padding-bottom: 800px;}
+    #contact .maps iframe{
+        width: 100%;
+        height: 450px;
+    }
+    }
+
+
+    @media (min-width: 576px) {
+
+    #contact{padding-bottom: 800px;}
+
+    #contact .maps iframe{
+        width: 100%;
+        height: 450px;
+    }
+    }
+
+    @media (min-width: 768px) {
+
+    #contact{padding-bottom: 350px;}
+
+    #contact .maps iframe{
+        width: 100%;
+        height: 850px;
+    }
+    }
+
+    @media (min-width: 992px) {
+    #contact{padding-bottom: 200px;}
+
+    #contact .maps iframe{
+        width: 100%;
+        height: 700px;
+    }
+    }
+
+
+    }
+{% endblock %}
+
+<!-- body -->
+{% block body %}
+<h2 class="text-center m-4">{% block title %} Contact Us {% endblock %} </h2>
+{% from 'macro.html' import contact_us %}
+{{contact_us(form)}}
+{% endblock %}
