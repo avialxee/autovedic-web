@@ -1,5 +1,5 @@
 {% macro search_services() %}
-<div class="contents-wrapper d-flex justify-content-center search-autovedic">
+<div class="contents-wrapper d-flex justify-content-center">
     <form class="pb-4" method="post">
         <div id="" class="input-group ">
             
@@ -79,10 +79,7 @@
     
     <div class="row pt-2 " id="contact">
         <div class="mx-auto container registration  form-row ">
-            <div class="col-md-6 maps" >
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3559.9303355529614!2d80.86102871447191!3d26.84216798315803!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399bff3a05c81b9d%3A0xd075061f469d1183!2sAutovedic!5e0!3m2!1sen!2sin!4v1654550187654!5m2!1sen!2sin"  frameborder="0" style="border:0;" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-            </div>
-            <div class="col-md-6 p-5">
+            <div class="p-5">
                 <form method="post" class="">
                     <div class="row">
                         <div class="col-12">
@@ -102,12 +99,12 @@
                             </div>
                             </div>
                         <div class="col-12">
-                        <div class="form-group">
+                        <div class="form-group ">
                             {{form.message(class="form-control mt-2")}}
                         </div>
                         </div>
-                        <div class="col-12">
-                        {{form.submit(class="btn btn-light")}}
+                        <div class="col-12 text-right">
+                        {{form.submit(class="btn btn-info")}}
                         </div>
                     </div>
                 </form>

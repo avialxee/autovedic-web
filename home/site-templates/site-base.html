@@ -11,7 +11,9 @@
     <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="{{url_for('site.static', filename='css/style.css')}}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     {% block head %}
     {% endblock %}
     <title>{% block title %}{% endblock %} - Autovedic </title>
@@ -26,7 +28,7 @@
         background-image: url("{{url_for('site.static',filename='media/banner.jpg')}}");
     }
       .autovedic-header{
-        background:rgba(151, 151, 151, 0.2);
+        background:rgba(0, 0, 0, 0.0);
         background-position-y: bottom;
         
       }
@@ -74,12 +76,12 @@
     
   </head>
   <body>
-    <div class="text-fluid alert alert-secondary small m-0 p-0 pr-3 text-right pb-1" role="alert" >
+    <!-- <div class="text-fluid alert alert-secondary small m-0 p-0 pr-3 text-right pb-1" role="alert" >
       contact : <a href="mailto:support@autovedic.com">username@email.com</a>
-      <!--button type="button" class="close" data-dismiss="alert" aria-label="Close" style="font-size: 1.2rem !important;">
+      button type="button" class="close" data-dismiss="alert" aria-label="Close" style="font-size: 1.2rem !important;">
         <span class=" pl-5 pr-1 m-0 small" aria-hidden="true" >&times;</span>
-      </button-->
-    </div>
+      </button
+    </div> -->
 
     <!-- navbar - begins -->
     <noscript class="alert alert-warning w-100 d-flex mx-auto mb-0"> Not all features will work! Please set scripts to always allowed.</noscript>
@@ -89,9 +91,38 @@
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-    {% block scripts %}{% endblock %}
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
-    
+    {% block scripts %}{% endblock %}
       </body>
+ <!--script for navbar-->
+
+
+<!-- Function used to shrink nav bar removing paddings and adding black background -->
+<script>
+  $(document).ready(function(){
+    $(window).scroll(function() {
+        if ($(document).scrollTop() > 50) {
+            $(".nav").addClass('affix');
+            $("a.navbar-brand:first").addClass("text-light");
+            $("a.nav-link").addClass("text-light");
+        } else {
+            $(".nav").removeClass('affix');
+            $("a.navbar-brand:first").removeClass("text-light");
+            $("a.nav-link").removeClass("text-light");
+        }
+    });
+
+    $(".navTrigger").click(function () {
+    $(this).toggleClass('active');
+    //console.log("Clicked menu");
+    $("#mainListDiv").toggleClass("show_list");
+    $("a.nav-link").toggleClass("text-light");
+    $("#mainListDiv").fadeIn();
+
+    });
+
+});
+</script>   
 </html>

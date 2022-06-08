@@ -1,245 +1,30 @@
-<header class="autovedic-header">
-    <div class="logo-area">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-md-4">
-                    <div class="mr-auto order-1">
-                        <div class="jumbo-autovedic">
-                            <a class="navbar-brand h1 mx-auto" href="{{ url_for('site.index')}}">AUTOVEDIC</a>
-                        </div>
-                    </div>
-                </div> <!-- Col End -->
-
-                <div class="pt-1 ml-auto ">
-                    <ul id="selected_car" class="navbar-nav ml-auto row pr-1 text-right dropdown ">
-                        <li class="nav-item col-1">
-                            <a  class="nav-link align-items-center text-center " href="{{url_for('site.select_vehicle')}}"
-                                alt="{{ current_user.last_vehicle_model_nm }}">
-                                <i class="fas fa-car btn-outline-primary"></i>
-                                {% if current_user.last_vehicle_model_nm %}
-                                    <li id="car" class="dropdown-content">
-                                        <span class="small"> 
-                                            ({{ current_user.last_vehicle_model_nm }})
-                                        </span>
-                                    </li>
-                            </a>
-                                {% else %}
-                                    <li id="car" class="dropdown-content">
-                                        <span class="small"> 
-                                            Select Model 
-                                        </span>
-                                    </li>
-                            </a>
-                            
-                            {% endif %}
-                            
-                        </li>
-                    </ul> <!-- vehicle -->
+<header id="layout-header" width=100%>
+    <nav class="nav">
+        <div class="container" style="padding-top: 0px;">
+            <div class="logo">
+                
+                <a class="navbar-brand " href="{{ url_for('site.index')}}" >
+                    <img class="navbar-brand img-fluid" src="{{url_for('site.static',filename='media/logo-part-light.png')}}" height=100vh/>
+                    AUTOVEDIC
+                </a>
+            </div>
+            <div id="mainListDiv" class="main_list">
+                <ul class="navlinks">
                     
-                </div> <!-- Col End -->
-                <div class="pt-0 mt-0 ml-1 ">
-                    <ul id="selected_car" class="navbar-nav ml-auto row pr-1 text-right dropdown ">
-                        <li class="nav-item col-1">
-                            <a  class="nav-link align-items-center text-center " href="{{url_for('site.select_location')}}"
-                                alt="{{ current_user.last_vehicle_model_nm }}">
-                                <i class="fas fa-map-marker-alt btn-outline-primary"></i>
-                                {% if current_user.pincode %}
-                                    <li id="map" class="dropdown-content">
-                                        <span class="small"> 
-                                            ({{ current_user.pincode }})
-                                        </span>
-                                    </li>
-                            </a>
-                                {% else %}
-                                    <li class="dropdown-content">
-                                        <span class="small"> 
-                                            Set Location 
-                                        </span>
-                                    </li>
-                            </a>
-                            
-                            {% endif %}
-                        </li>
-                    </ul>
-                </div>
+		            <li class="  nav-item "><a class="nav-link" href="{{ url_for('site.login')}}">
+                        Login</a></li>
+			        <li class="  nav-item "><a class="nav-link" href="{{ url_for('site.register')}}">
+                        Sign Up</a></li>
                 </ul>
-            </div> <!-- Row End -->
-        </div> <!-- Container End -->
-    </div> <!-- Logo End -->
+            </div>
+            <span class="navTrigger">
+                <i></i>
+                <i></i>
+                <i></i>
+            </span>
+        </div>
+    </nav>
 
-    <!-- navigation start -->
-    <div class="header-nav navbar-fixed">
-        <div class="container">
-            <nav class="navbar navbar-expand-lg navbar-light">
-                <button class="navbar-toggler" type="button" data-toggle="collapse"
-                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                    aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button><!-- End of Navbar toggler -->
-
-                <div class="collapse navbar-collapse justify-content-end " id="navbarSupportedContent">
-
-                    <div id="primary-nav" class="">
-                        <ul id="main-menu" class="navbar-nav">
-                            <!-- <li id=""
-                                class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Home</a>
-                                <ul class="dropdown-menu">
-                                    <li id=""
-                                        class="nav-item active">
-                                        <a href=""
-                                            class=" dropdown-item active">Home one</a>
-                                    </li>
-                                    <li id=""
-                                        class="nav-item">
-                                        <a href=""
-                                            class=" dropdown-item">Home
-                                            two</a> </li>
-                                    <li id=""
-                                        class="nav-item">
-                                        <a href=""
-                                            class=" dropdown-item">Home
-                                            Three</a> </li>
-                                    <li id=""
-                                        class="nav-item">
-                                        <a href=""
-                                            class=" dropdown-item">Home
-                                            four</a></li>
-                                </ul>
-                                
-                            </li> -->
-                            <li id=""
-                                class=" nav-item">
-                                <a href="{{url_for('site.index')}}" class="nav-link">Home</a>
-                            </li>
-                            <li id=""
-                                class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">About</a>
-                                <ul class="dropdown-menu">
-                                    <li id=""
-                                        class="nav-item">
-                                        <a href=""
-                                            class=" dropdown-item">About
-                                            Us</a> </li>
-                                    <li id=""
-                                        class="nav-item">
-                                        <a href=""
-                                            class=" dropdown-item">Our
-                                            Team</a> </li>
-                                    <li id=""
-                                        class="nav-item">
-                                        <a href=""
-                                            class=" dropdown-item">Gallery</a>
-                                    </li>
-                                    <li id=""
-                                        class="nav-item">
-                                        <a href=""
-                                            class=" dropdown-item">FAQ</a> </li>
-                                    <li id=""
-                                        class=" nav-item">
-                                        <a href=""
-                                            class=" dropdown-item">Testimonial</a> </li>
-                                    <li id=""
-                                        class=" nav-item">
-                                        <a href=""
-                                            class=" dropdown-item">Pricing</a></li>
-                                </ul>
-                                
-                            </li>
-                            <li id=""
-                                class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Services</a>
-                                <ul class="dropdown-menu">
-                                    <li id=""
-                                        class=" nav-item">
-                                        <a href=""
-                                            class=" dropdown-item">Services
-                                            All</a> </li>
-                                    <li id=""
-                                        class="nav-item">
-                                        <a href=""
-                                            class=" dropdown-item">Service Single</a></li>
-                                </ul>
-                                
-                            </li>
-                            <li id=""
-                                class="nav-item dropdown">
-                                <a href="" class="nav-link dropdown-toggle"
-                                    data-toggle="dropdown">Shop</a>
-                                <ul class="dropdown-menu">
-                                    <li id=""
-                                        class="nav-item">
-                                        <a href=""
-                                            class=" dropdown-item">Product</a>
-                                    </li>
-                                    <li id=""
-                                        class=" nav-item">
-                                        <a href=""
-                                            class=" dropdown-item">Shop single</a></li>
-                                </ul>
-                                
-                            </li>
-                            <li id="" class="nav-item dropdown">
-                                <a class="nav-item nav-link dropdown-toggle"
-                                    data-toggle="dropdown" href="{{url_for('site.user_account')}}">
-                                    
-                                       {% if not current_user.is_authenticated %} 
-                                       Account
-                                       {% else %}
-                                       {% set name = current_user.fullname.split(' ') %}
-                                       Hi {{ name[0] }}!
-                                       {% endif %}
-                                    </a>
-                                
-                                <ul class="dropdown-menu">
-                                    {% if current_user.is_authenticated %}
-                                    <li class="nav-item"> 
-                                        <a class="nav-link" href="{{url_for('site.user_account')}}"> Manage Account
-                                        </a>
-                                      </li>
-                                      <li class="nav-item">
-                                          <a class="nav-link" href="{{url_for('site.logout')}}">Log Out</a>
-                                      </li>
-                                    {% else %}
-                                      <li class="nav-item">
-                                          <a class="nav-link" href="{{url_for('site.login')}}">Log In</a>
-                                      </li>
-                                      <li class="nav-item">
-                                          <a class="nav-link" href="{{url_for('site.register')}}">Sign Up</a>
-                                      </li>
-                                    {% endif %}
-                                </ul>
-
-                            </li>
-                            <li id=""
-                                class=" nav-item">
-                                <a href="{{url_for('site.contactus')}}" class="nav-link">Contact</a>
-                            </li>
-                        </ul>
-                    </div>
-
-
-
-
-                </div> <!-- End of navbar collapse -->
-                <div class="header-cart">
-                    <div class="cart-link">
-
-                        <span class="bi bi-cart"></span>
-                        <sup>0</sup>
-
-                        </a>
-
-
-                    </div>
-                </div>
-
-            </nav> <!-- End of Nav -->
-        </div> <!-- End of Container -->
-    </div> <!-- End of Header Angle-->
-
-
-
+    <section class="home-menu">
+    </section>
 </header>
-
-{% block nav %}{% endblock %}

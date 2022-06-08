@@ -188,7 +188,15 @@ def root_media(filename):
             os.path.join('home'+url_for('site.static',filename='/rootmedia'), ''),
             filename
         )
+@site.route('/home')
+def home1():
+    cform = ContactUsForm()
 
+    if request.method == 'POST':
+        #flash('selected {}'.format(request.form['model_brand']))
+        session['search'] = 'vendor-search'
+        return redirect(url_for('site.search_result', service_gid=request.form['service_sname']))
+    return render_template('home.html', cform=cform)
 
 # miscelleneous
 @site.route('/contact-us')
