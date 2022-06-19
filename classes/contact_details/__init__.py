@@ -30,7 +30,7 @@ class ContactDetails:
         email=formd[ 'email']
         phone=formd[ 'phone']
         df_form = pd.DataFrame([[brand,model,fullname,email,phone]] , columns=['brand','model', 'fullname', 'email', 'phone'])
-        df_form.to_csv(url_db)
+        df_form.to_csv(url_db,mode='a', index=False, header=False)
 
 cd = ContactDetails()
 def record_contact_details(formd):
