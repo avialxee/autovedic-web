@@ -157,32 +157,36 @@ $(document).ready(function(){
     
     <div class="row pt-2 " id="contact">
         <div class="mx-auto container registration  form-row ">
-            <div class="px-5">
-                <form method="post" class="">
+            <div class="">
+                <form method="post" class="w-100">
                     
-                    <div class="row" style="padding: 5vh;">
-                        <div class="col-6">
+                    <div class="row justify-content-center">
+                        <div class="col-5  ">
                             <select id="car_brand" class="form-control " name="car_brand" placeholder="Search Brands" required="
                             " type="text" value=""><option value="none" selected disabled hidden>Select Brand</option>
                             </select>
                                 
                         </div>
-                        <div class="col-6">
+                        <div class="col-5 ">
                             <select id="car_model" class=" form-control " name="car_model" placeholder="Search Model" required="
                             " type="text" value=""  ><option value="none" selected disabled hidden>Select Model</option></select>
                         </div>
-                        <div class="col-12">
+                    </div>
+                    <div class="row justify-content-center " >
+                        <div class="col-10">
                         <div class="form-group">
                             {{form.fullname(class="form-control mt-2")}}
                         </div>
                         </div>
+                    </div>
+                    <div class="row justify-content-center">
                         
-                        <div class="col-6">
+                        <div class="col-5 ">
                         <div class="form-group">
                             {{form.email(class="form-control mt-2")}}
                         </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-5 ">
                             <div class="form-group">
                                 {{form.phone(class="form-control mt-2")}}
                             </div>
