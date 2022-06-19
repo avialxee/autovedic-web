@@ -7,6 +7,16 @@
     background-position-y:90%; 
     height:100vh; 
     position:relative;}
+
+.why-us {
+    background: linear-gradient(rgba(0,0,0,.4), rgba(0,0,0,.2)),url({{url_for('site.static', filename='media/images/kimi-albertson-iR5erkaiX9g-unsplash.jpg')}});
+    height:100%;
+    position:relative;
+    background-position:bottom; 
+    background-position-y:90%; 
+}
+    
+
 {% endblock %}
 <!-- title -->
 {% block title %} Home {% endblock %} 
@@ -23,15 +33,17 @@
                 <!-- {{search_services()}} -->
                 <div style="min-height:22vh;" class="px-5">
                     {{chooseus()}}
-                    
                 </div>
                
                 <div class="p-2 m-2">
                     {{contact_us(cform)}}
-                    {% with messages = get_flashed_messages() %}  
+                    
+                </div>
+                <div class="p-2 m-2 ">
+                {% with messages = get_flashed_messages(with_categories=true) %}  
                     {% if messages %}  
-                          {% for message in messages %}  
-                               <p>{{ message }}</p>  
+                          {% for category, message in messages %}  
+                               <div class="alert alert-{{category}}">{{ message }}  </div>
                           {% endfor %}  
                     {% endif %}  
                  {% endwith %}  
@@ -47,7 +59,7 @@
         </div> -->
 </div>
     <div class="row m-0">
-        <div class="col-12 p-5 py-0 my-0 text-center">
+        <div class="col-12 p-5 py-0 my-0 text-center why-us">
             {{whyus()}}
 
         </div>

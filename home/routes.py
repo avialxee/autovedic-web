@@ -11,7 +11,8 @@ from classes.registration import User
 from classes.database import db_session
 import bcrypt
 from classes.contact_details import record_contact_details
-
+from datetime import datetime
+            
 site = Blueprint(name='site', import_name= __name__, template_folder='site-templates', static_folder='site-static')
 
 # WRAPER
@@ -46,13 +47,22 @@ def index():
         #flash('selected {}'.format(request.form['model_brand']))
         # session['search'] = 'vendor-search'
         # return redirect(url_for('site.search_result', service_gid=request.form['service_sname']))
-        
-        formd={'brand':request.form['car_brand'], 
-        'model':request.form['car_model'],
-        'fullname':request.form['fullname'],
-        'email':request.form['email'],
-        'phone':request.form['phone']}
-        record_contact_details(formd)
+        if 'car_model' in request.form:
+            date = str(datetime.now())
+            
+            formd={'brand':request.form['car_brand'], 
+                    'model':request.form['car_model'],
+                    'fullname':request.form['fullname'],
+                    'email':request.form['email'],
+                    'phone':request.form['phone'],
+                    'time':date,
+                    'ip':str(request.environ['REMOTE_ADDR'] if request.environ.get('HTTP_X_FORWARDED_FOR') is None else request.environ['HTTP_X_FORWARDED_FOR'])
+                    }
+            # if formd['ip'] in 
+            record_contact_details(formd)
+            flash('Sent! We will contact you ASAP.', 'success')
+        else:
+            flash('Failed! Please select Car Model', 'danger')
         
     return render_template('home.html', content=sform, cform=cform)
 
