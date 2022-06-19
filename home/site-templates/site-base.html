@@ -35,9 +35,7 @@
       .jumbo-autovedic {
         background: none;
       }
-      .navbar-brand {
-        font-size: 6.5vh;
-      }
+      
       .autovedic-logo {
         width: 20vw;
       }
@@ -103,7 +101,7 @@
 <script>
   $(document).ready(function(){
     $(window).scroll(function() {
-        if ($(document).scrollTop() > 50) {
+        if ($(document).scrollTop() > 10) {
             $(".nav").addClass('affix');
             $("a.navbar-brand:first").addClass("text-light");
             $("a.nav-link").addClass("text-light");
@@ -119,10 +117,11 @@
     //console.log("Clicked menu");
     $("#mainListDiv").toggleClass("show_list");
     $("a.nav-link").toggleClass("text-light");
-    $("#mainListDiv").fadeIn();
+    $("#mainListDiv").slideToggle();
 
     });
 
 });
 </script>   
+{% block onloadscripts %}{% endblock %}
 </html>

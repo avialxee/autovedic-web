@@ -1,4 +1,4 @@
-{% from 'macro.html' import search_services, contact_us %}
+{% from 'macro.html' import search_services, contact_us, service_apiform, chooseus, whyus, select_vehicle_ajax %}
 {% extends "site-base.html" %}
 {% block style %}
 .home-1 {
@@ -16,24 +16,49 @@
     
 {% block body %}
 
-<div class="row home-1">
-        <div class="col-6" style="height: 90vh;" >
+<div class="row m-0 home-1 d-flex">
+        <div class="col-md-7 col-sm-12 bg-light" style="height: 80vh;" >
             
-            <div class="mt-5 pt-5 dt-flex align-middle">
-                {{search_services()}}
+            <div class="mt-5 pt-0 dt-flex align-middle ">
+                <!-- {{search_services()}} -->
+                <div style="min-height:22vh;" class="px-5">
+                    {{chooseus()}}
+                    
+                </div>
+               
+                <div class="p-2 m-2">
+                    {{contact_us(cform)}}
+                    {% with messages = get_flashed_messages() %}  
+                    {% if messages %}  
+                          {% for message in messages %}  
+                               <p>{{ message }}</p>  
+                          {% endfor %}  
+                    {% endif %}  
+                 {% endwith %}  
+                </div>
             </div>
             
         </div>
-        <div class="col-4 mx-auto mt-auto mb-auto">
-            <div class="p-2 m-2">
-                {{contact_us(cform)}}   
+        <!-- <div class="col-md-4 col-sm-12 m-auto py-5">
+            <div class="p-1">
+            {{search_services()}}     
             </div>
             
+        </div> -->
+</div>
+    <div class="row m-0">
+        <div class="col-12 p-5 py-0 my-0 text-center">
+            {{whyus()}}
+
         </div>
     </div>
 {% endblock %}
 {% block scripts %}
 
 
-
+{{service_apiform()}}
+{% endblock %}
+{% block onloadscripts %}
+<script src="{{url_for('site.static', filename='js/dynamictext.js')}}"></script>
+{{select_vehicle_ajax()}}
 {% endblock %}

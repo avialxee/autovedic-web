@@ -3,6 +3,7 @@ api = Blueprint('api', __name__, url_prefix='/api')
 from classes.vehicles import load_vehicles, load_brands
 from classes.maps import load_maps, load_pincodes
 from classes.services import load_services, load_stype_id, load_services_byid
+from classes.dtext import chooseus_textbysno
 
 @api.route('/', methods=['GET', 'POST'])
 def index():
@@ -66,3 +67,8 @@ def services_load_id():
 #@api.route('/vendors/pincodes', methods=['GET'])
 #def show_pincodes():
 #    return load_pincodes(), 200
+
+# ------------ dynamic texts ----#
+@api.route('/dtext/chooseus/<sno>', methods=['GET'])
+def chooseus_by_sno(sno):
+    return chooseus_textbysno(sno), 200   

@@ -1,6 +1,6 @@
 from wtforms import Form, StringField, validators, DecimalField, SelectField, TextAreaField
 from wtforms.fields.simple import PasswordField, SubmitField
-
+from markupsafe import Markup
 class SearchForm(Form) :
     vehicle = SelectField(u'Vehicle ', choices=[(1, 'Car'), (2, 'Bikes')])
     brand = StringField('Brand',render_kw={"placeholder": "Brand"}, validators=[validators.required(), validators.Length(min=2, max=20)])
@@ -25,4 +25,5 @@ class ContactUsForm(Form):
     email = StringField('Email ',  render_kw={"placeholder": "Email"}, validators=[validators.Email(), validators.required()])
     phone = StringField('Phone ',  render_kw={"placeholder": "Phone"}, validators=[validators.Email(), validators.required()])
     message = TextAreaField('Message', render_kw={'placeholder':'Message'})
-    submit = SubmitField('Send')
+    # submit_value = Markup('<i class="fa fa-phone"></i>')
+    # submit = SubmitField(submit_value)

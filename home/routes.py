@@ -10,6 +10,7 @@ from classes.smtp.test_mail import test_msg
 from classes.registration import User
 from classes.database import db_session
 import bcrypt
+from classes.contact_details import record_contact_details
 
 site = Blueprint(name='site', import_name= __name__, template_folder='site-templates', static_folder='site-static')
 
@@ -43,8 +44,16 @@ def index():
 
     if request.method == 'POST':
         #flash('selected {}'.format(request.form['model_brand']))
-        session['search'] = 'vendor-search'
-        return redirect(url_for('site.search_result', service_gid=request.form['service_sname']))
+        # session['search'] = 'vendor-search'
+        # return redirect(url_for('site.search_result', service_gid=request.form['service_sname']))
+        
+        formd={'brand':request.form['car_brand'], 
+        'model':request.form['car_model'],
+        'fullname':request.form['fullname'],
+        'email':request.form['email'],
+        'phone':request.form['phone']}
+        record_contact_details(formd)
+        
     return render_template('home.html', content=sform, cform=cform)
 
 
