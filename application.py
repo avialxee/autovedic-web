@@ -59,8 +59,8 @@ def create_app():
     mail.init_app(app)
 
     # --- database configuration -----
-    from classes.database import db_session
-
+    from classes.database import db_session, init_db
+    init_db()
     register_admin(db_session)
 
     @app.teardown_appcontext

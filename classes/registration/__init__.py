@@ -9,7 +9,8 @@ from classes.database import Base, db_session, ForeignKey, relationship
 
 role_association = Table('role_association', Base.metadata,
     Column('user_id', ForeignKey('users.userid'), primary_key=True),
-    Column('role_id', ForeignKey('roles.id'), primary_key=True),extend_existing=True
+    Column('role_id', ForeignKey('roles.id'), primary_key=True),
+    Column('admin_id', ForeignKey('admins.adminid'), primary_key=True),extend_existing=True
 )
 
 class User(Base, UserMixin):
@@ -45,11 +46,10 @@ class User(Base, UserMixin):
     password = Column(String(100))
     name = Column(String(15), unique=True, nullable=False)
     is_auth = Column(Boolean, default=False)
+    
+    # # relationships
+    role_id = Column(Integer, ForeignKey("roles.id"))
 
-    # relationships
-    user_role = relationship("Role",
-                    secondary=role_association,
-                    backref="parents")
 
     def __repr__(self):
         return f'<User {self.name!r}>'
@@ -70,13 +70,22 @@ class User(Base, UserMixin):
             return True 
 
     def is_administrator(self):
-        return False
+        return True#self.user_role.is_admin()
 
 class Role(Base):
     __tablename__ = 'roles'
     id = Column(Integer, primary_key=True)
     role = Column(String(15), nullable=False )
+    
 
+    # relationship
+    user = relationship("User",
+                    secondary=role_association,
+                    backref="role", lazy='dynamic')
+
+    admin_user = relationship("BackendAdmin", secondary=role_association,
+                backref="role")
+        
     def is_user(self):
         return True
     
@@ -87,7 +96,7 @@ class Role(Base):
         return False
     
     def is_admin(self):
-        return False
+        return self.is_admin
     
     def is_developer(self):
         return False
@@ -95,7 +104,7 @@ class Role(Base):
     def is_root(self):
         return False
 
-class BackendAdmin(UserMixin, Base):
+class BackendAdmin(Base, UserMixin):
     query = db_session.query_property()
     __tablename__ = 'admins'
     __table_args__ = {'extend_existing': True}
@@ -117,6 +126,10 @@ class BackendAdmin(UserMixin, Base):
     is_content_creator = Column(Boolean, default=False)
     is_auth = Column(Boolean, default=False)    
     is_active = is_auth = Column(Boolean, default=False)
+
+    # relationship
+    # role_id = Column(Integer, ForeignKey("roles.id"))
+    role_id = Column(Integer, ForeignKey("roles.id"))
 
     def is_active(self):
         return self.is_active

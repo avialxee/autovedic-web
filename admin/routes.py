@@ -7,7 +7,17 @@ from classes.registration import BackendAdmin
 import bcrypt
 from admin import AdminTemplatesView
 
-admin_bp = Blueprint('admin_bp', __name__, template_folder='admin-templates', static_folder='admin-static', url_prefix='/admin')
+admin_bp = Blueprint('admin_bp', __name__, template_folder='admin-templates', static_folder='admin-static', url_prefix='/TownHall')
+
+@admin_bp.route('/test')
+def test_admin():
+    if current_user.is_authenticated:
+        if current_user.is_administrator():
+            return 'admin'
+        else:
+            return 'not admin'
+    else:
+        return abort(400)
 
 @admin_bp.route('/admin-login', methods=['GET', 'POST'])
 def admin_login():
