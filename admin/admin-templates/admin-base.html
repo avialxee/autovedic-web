@@ -1,1 +1,37 @@
-{% extends 'admin/master.html' %}
+{% from 'admin-macro.html' import admin_welcome %}
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="avialxee" content="Autovedic">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.min.css">
+        <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+        <link rel="stylesheet" href="{{url_for('site.static', filename='css/style.css')}}">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" type="image/x-icon" href="{{url_for('site.static', filename='media/logo-part-light.png')}}">
+        {% block head %}{% endblock %}
+
+        <title>
+            Autovedic - {% block title %}{% endblock %}
+        </title>
+    </head>
+    <body>
+        <div class="">
+        {% if not current_user.is_authenticated %}
+            {{admin_welcome()}}
+        {% else %}
+            {% if not current_user.is_administrator %}
+                {{admin_welcome()}}
+            {# else #}
+                {# include 'admin-header.html' #}
+            {% endif %}            
+        {% endif %}
+
+        {% block body %}{% endblock %}
+        </div>
+    </body>
+</html>

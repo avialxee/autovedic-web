@@ -14,27 +14,17 @@ class AdminTemplatesView(BaseView):
 class AdminModelView(ModelView):
     def is_accessible(self):        
         if current_user.is_authenticated:
-            return current_user.is_administrator()
+            return current_user.is_administrator
         else:
             return False
     
     def inaccessible_callback(self, name, **kwargs):
-        abort(404)
-        
-   
-def register_admin(db_session):
-    #admin.add_view(ModelView(AdminModelView, db_session))
-    admin.add_view(AdminModelView(User, db_session))
-    admin.add_view(AdminModelView(Role, db_session))
-    admin.add_view(AdminModelView(BackendAdmin, db_session))
-    admin.add_view(AnalyticsView(name='Analytics'))
+        if not self.is_accessible():
+            abort(404)
 
 class AdminDashboard(AdminIndexView):
     def is_accessible(self):        
-        if current_user.is_authenticated:
-            return current_user.is_administrator()
-        else:
-            return False
+        return current_user.is_authenticated
     
     def inaccessible_callback(self, name, **kwargs):
         abort(404)
@@ -43,7 +33,7 @@ admin = Admin(name='Dashboard', template_mode='bootstrap4', index_view=AdminDash
 class AnalyticsView(BaseView):
     def is_accessible(self):        
         if current_user.is_authenticated:
-            return current_user.is_administrator()
+            return current_user.is_administrator
         else:
             return False
     
@@ -51,7 +41,7 @@ class AnalyticsView(BaseView):
         abort(404)
     #def is_accessible(self):
     #    if current_user.is_authenticated:
-    #        return current_user.is_administrator()
+    #        return current_user.is_administrator
     #    else:
     #        return False
     #from .routes import admin_bp
@@ -63,7 +53,7 @@ class AnalyticsView(BaseView):
 class VendorView(BaseView):
     #def is_accessible(self):
     #    if current_user.is_authenticated:
-    #        return current_user.is_administrator()
+    #        return current_user.is_administrator
     #    else:
     #        return False
     #from .routes import admin_bp
@@ -73,4 +63,11 @@ class VendorView(BaseView):
         return self.render('analytics_index.html')
 
 #admin.add_view(AnalyticsView(name='Analytics'))
-admin.add_view(VendorView(name='Vendors', endpoint='vendors'))
+# admin.add_view(VendorView(name='Vendors', endpoint='vendors'))
+def register_admin(db_session):
+    #admin.add_view(ModelView(AdminModelView, db_session))
+    admin.add_view(AdminModelView(User, db_session))
+    admin.add_view(AdminModelView(Role, db_session))
+    admin.add_view(AdminModelView(BackendAdmin, db_session))
+    admin.add_view(AnalyticsView(name='Analytics'))
+    

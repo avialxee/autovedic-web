@@ -1,11 +1,13 @@
+from email.policy import default
 from re import L
+from unicodedata import name
 from sqlalchemy.sql.sqltypes import Boolean, DateTime, FLOAT
 from wtforms.fields import DateField
 from flask_login import UserMixin
 from sqlalchemy import Table, Column, Integer, String
 from sqlalchemy.sql import func
 from classes.database import Base, db_session, ForeignKey, relationship
-
+import bcrypt
 
 role_association = Table('role_association', Base.metadata,
     Column('user_id', ForeignKey('users.userid'), primary_key=True),
@@ -68,24 +70,23 @@ class User(Base, UserMixin):
             return False
         else:
             return True 
-
+    @property
     def is_administrator(self):
-        return True#self.user_role.is_admin()
+        if self.name=='avialxee':
+            return True#self.user_role.is_admin()
+        else:
+            return False
+    
+    
 
 class Role(Base):
+    query = db_session.query_property()
     __tablename__ = 'roles'
     id = Column(Integer, primary_key=True)
     role = Column(String(15), nullable=False )
     
 
-    # relationship
-    user = relationship("User",
-                    secondary=role_association,
-                    backref="role", lazy='dynamic')
-
-    admin_user = relationship("BackendAdmin", secondary=role_association,
-                backref="role")
-        
+    
     def is_user(self):
         return True
     
@@ -148,3 +149,24 @@ class BackendAdmin(Base, UserMixin):
 
     def is_administrator(self):
         return self.is_admin
+
+def add_role(role_name):
+    role_session=Role(role=role_name)
+    db_session.add(role_session)
+    db_session.commit()
+    return f'created role:{role_name}', 200
+
+def default_admin():
+    try:
+        role_id=Role.query.filter_by(role='admin').first().id
+    except:
+        add_role(role_name='admin')
+        role_id=Role.query.filter_by(role='admin').first().id
+    db_session.commit()
+    if not BackendAdmin.query.filter_by(name='admin').first():# -- password hashing and checking
+        salt = bcrypt.gensalt()
+        default_pwd='admin'
+        password_hash = bcrypt.hashpw(default_pwd.encode('utf-8'), salt)
+        admin=BackendAdmin(name='admin', password=password_hash, email='admin@example.com', role_id=role_id)
+        db_session.add(admin)
+        db_session.commit()

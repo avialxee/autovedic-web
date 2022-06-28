@@ -15,7 +15,7 @@ def create_app():
     
     
     # --- Blueprints configuration -----
-    from admin import register_admin, admin
+    # from admin import register_admin, admin
     from admin.routes import admin_bp
     ##app.register_blueprint(admin)
     
@@ -27,7 +27,7 @@ def create_app():
     app.register_blueprint(site)
     login_manager.init_app(site)
 
-    admin.init_app(app)    
+    # admin.init_app(app)    
     app.register_blueprint(admin_bp)
     
     login_manager.blueprint_login_views = {
@@ -61,14 +61,12 @@ def create_app():
     # --- database configuration -----
     from classes.database import db_session, init_db
     init_db()
-    register_admin(db_session)
+    # register_admin(db_session)
 
     @app.teardown_appcontext
     def shutdown_session(exception=None):
         db_session.remove()
     return app
-
-
 application = create_app()
 
 
