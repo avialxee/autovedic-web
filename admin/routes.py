@@ -1,5 +1,5 @@
 from flask import Blueprint, redirect, url_for, request, flash, render_template, abort
-from flask_login import login_user, current_user, login_required
+from flask_login import login_user, current_user, login_required, logout_user
 from home.forms import RegisterForm, LoginForm
 from classes.database import db_session
 from classes.url import is_url_safe
@@ -7,7 +7,8 @@ from classes.registration import BackendAdmin, Role, User
 import bcrypt
 from admin import AdminTemplatesView
 from functools import wraps
-
+from classes.contact_details import read_contact_details
+from pandas import read_json
 admin_bp = Blueprint('admin_bp', __name__, template_folder='admin-templates', static_folder='admin-static', url_prefix='/TownHall')
 
 
@@ -32,7 +33,8 @@ def before_request():
 
 @admin_bp.route('/')
 def index():
-    return render_template('admin_index.html')
+    df=read_json(read_contact_details())
+    return render_template('admin_index.html', contact_details=df.to_html(classes='table table-striped table-responsive table-bordered'))
 
 @admin_bp.route('/test')
 def test_admin():
@@ -56,9 +58,17 @@ def test_admin():
         # else:
         #     return 'none'
 
+@admin_bp.route('/logout')
+def admin_logout():
+    logout_user()
+    next_url = request.args.get('next')
+    return redirect(next_url or url_for('site.index'))
+
 @admin_bp.route('/admin-login', methods=['GET', 'POST'])
 def admin_login():
     form = LoginForm()
+    if current_user.is_administrator:
+        abort(404)
     if request.method=='POST':
         user = BackendAdmin.query.filter_by(name=request.form['username']
                         ).first()

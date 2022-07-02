@@ -33,8 +33,15 @@ class ContactDetails:
         ip=formd['ip']
         df_form = pd.DataFrame([[brand,model,fullname,email,phone,time,ip]] , columns=['brand','model','fullname','email','phone','time','ip'])
         df_form.to_csv(url_db,mode='a', index=False, header=False)
+    
+    def read_details(self):
+        url_db = 'home/'+url_for('site.static', filename='rootmedia/contact-details.csv')
+        df = pd.read_csv(url_db)
+        b = df[['brand','model','fullname','email','phone','time','ip']]
+        return b.to_json(orient='columns')
 
 cd = ContactDetails()
 def record_contact_details(formd):
     return cd.record_details(formd)
-
+def read_contact_details():
+    return cd.read_details()

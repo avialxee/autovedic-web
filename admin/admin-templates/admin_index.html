@@ -1,1 +1,15 @@
 {% extends 'admin-base.html' %}
+{% block style %}
+
+{% endblock %}
+{% block body %}
+<h2>
+    Contact Us Form
+</h2>
+<div class="table  table-hover table-striped table-responsive table-bordered">
+    
+        {{contact_details|safe}}
+    
+    
+</div>
+{% endblock %}
