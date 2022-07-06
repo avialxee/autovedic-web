@@ -1,5 +1,7 @@
-from flask import Blueprint, redirect, url_for, request, flash, render_template, abort
+from fileinput import filename
+from flask import Blueprint, redirect, url_for, request, flash, render_template, abort, current_app
 from flask_login import login_user, current_user, login_required, logout_user
+from requests import session
 from home.forms import RegisterForm, LoginForm
 from classes.database import db_session
 from classes.url import is_url_safe
@@ -9,6 +11,8 @@ from admin import AdminTemplatesView
 from functools import wraps
 from classes.contact_details import read_contact_details
 from pandas import read_json
+from classes.smtp import set_smtp_settings, fetch_smtp_settings, mail
+from admin.forms import SetSMTP
 admin_bp = Blueprint('admin_bp', __name__, template_folder='admin-templates', static_folder='admin-static', url_prefix='/TownHall')
 
 
@@ -40,7 +44,7 @@ def index():
 def test_admin():
     if current_user.is_authenticated:
         if current_user.is_administrator:
-            return 'admin'
+            return current_user.get_id()
         else:
             return 'not admin'
     else:
@@ -68,7 +72,7 @@ def admin_logout():
 def admin_login():
     form = LoginForm()
     if current_user.is_administrator:
-        abort(404)
+        redirect(next_url or url_for('admin_bp.index'))
     if request.method=='POST':
         user = BackendAdmin.query.filter_by(name=request.form['username']
                         ).first()
@@ -135,9 +139,33 @@ def admin_register():
         next_url = request.args.get('next')
         if not is_url_safe(next_url):
             return abort(400)
-        return redirect(next_url or url_for('admin_bp.admin_register') or url_for('admin.index'))
+        return redirect(next_url or url_for('admin_bp.admin_register') or url_for('admin_bp.index'))
     return AdminTemplatesView().render('admin-register.html', form=form)
 
+@admin_bp.route('/settings', methods=['GET', 'POST'])
+def admin_settings():
+    # envfile=url_for('site.static', filename='rootmedia/.env', _external=True)
+    envfile='home/site-static/rootmedia/.env'
+    fss=fetch_smtp_settings(envfile)
+    sform=SetSMTP()
+    if request.method=='POST':
+        print(request.form)
+        fss['MAIL_SERVER']=request.form['MAIL_SERVER']
+        fss['MAIL_PORT']=request.form['MAIL_PORT']
+        fss['MAIL_USERNAME']=request.form['MAIL_USERNAME']
+        fss['MAIL_PASSWORD']=request.form['MAIL_PASSWORD']
+        fss['MAIL_DEFAULT_SENDER']=request.form['MAIL_DEFAULT_SENDER']
+        fss['MAIL_USE_TLS']=request.form['MAIL_USE_TLS'].lower() == 'true'
+        fss['MAIL_USE_SSL']=request.form['MAIL_USE_SSL'].lower() == 'true'
+        # try:
+        set_smtp_settings(envfile,**fss)
+        flash('Success!')
+        current_app.config.update(fss)
+        print(fss)
+        mail.init_app(current_app)
+        # except:
+        #     flash('Failed!')
+    return render_template('settings.html', sform=sform, fss=fss)
 
 # error handlers
 @admin_bp.app_errorhandler(404)

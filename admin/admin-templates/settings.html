@@ -1,0 +1,14 @@
+{% extends 'admin-base.html' %}
+
+
+{% block style %}
+
+{% endblock %}
+{% block body %}
+<h2 class="text-center">{% block title %} Settings
+    {% endblock %}
+</h2>
+<h4 class="h4"> SMTP Settings</h4><hr>
+    {{setting_smtp(sform,fss)}}
+</div>
+{% endblock %}

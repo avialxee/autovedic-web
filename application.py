@@ -1,8 +1,9 @@
 import os
 from flask_login import LoginManager
 from flask import Flask
+from requests import session
 from settings import MAIL_SERVER,MAIL_PORT,MAIL_USE_TLS,MAIL_USERNAME,MAIL_PASSWORD
-
+from classes.smtp import fetch_smtp_settings
 
 def create_app():
     app = Flask(__name__)
@@ -39,22 +40,26 @@ def create_app():
     from classes.registration import User, BackendAdmin
     @login_manager.user_loader
     def load_user(userid):
-        fid = User.query.get(int(userid))
+        print(userid) 
+        fid = User.query.filter_by(sessionid=userid).first()
         if fid == None:
-            fid = BackendAdmin.query.get(int(userid))        
+            userid = userid.replace('U', 'B')
+            fid = BackendAdmin.query.filter_by(sessionid=userid).first()
+         
         return fid
     
     from classes import classdef
     app.register_blueprint(classdef)
 
     # --- mail configuration -----
-    app.config.update(dict(
-        MAIL_SERVER = MAIL_SERVER,
-        MAIL_PORT = MAIL_PORT,
-        MAIL_USE_TLS = MAIL_USE_TLS,
-        MAIL_USERNAME = MAIL_USERNAME,
-        MAIL_PASSWORD = MAIL_PASSWORD
-    ))
+    # app.config.update(dict(
+    #     MAIL_SERVER = MAIL_SERVER,
+    #     MAIL_PORT = MAIL_PORT,
+    #     MAIL_USE_TLS = MAIL_USE_TLS,
+    #     MAIL_USERNAME = MAIL_USERNAME,
+    #     MAIL_PASSWORD = MAIL_PASSWORD
+    # ))
+    app.config.update(fetch_smtp_settings('home/site-static/rootmedia/.env'))
     from classes.smtp import mail
     mail.init_app(app)
 

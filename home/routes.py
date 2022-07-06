@@ -12,7 +12,7 @@ from classes.database import db_session
 import bcrypt
 from classes.contact_details import record_contact_details
 from datetime import datetime
-            
+import time            
 site = Blueprint(name='site', import_name= __name__, template_folder='site-templates', static_folder='site-static')
 
 # WRAPER
@@ -169,9 +169,13 @@ def login():
         if user:
             if bcrypt.checkpw(password, user.password):
                 user.is_auth = True
-                db_session.add(user)
+                # db_session.add(user)
                 db_session.commit()
-                login_user(user, remember=True)
+                try:
+                    login_user(user, remember=True)
+                except:
+                    user.is_auth = False
+                    db_session.commit()
                 
             else:
                 flash('wrong password!')
@@ -187,6 +191,10 @@ def login():
 @login_required
 def logout():
     #session.clear()
+    # print(current_user.userid)
+    user = User.query.filter_by(sessionid=current_user.sessionid).first()
+    user.is_auth=False
+    db_session.commit()
     logout_user()
     return redirect(url_for('site.index'))
 
@@ -198,7 +206,8 @@ def user_account():
 @site.route('/lrq')
 @login_required
 def lrq():
-    return {'hello':'world'}
+    user_id_str='USER'+str(int(time.time()))
+    return {'hello':'world', 'user_id':user_id_str}
 
 @site.route('/rootmedia/<path:filename>')
 @auth_root

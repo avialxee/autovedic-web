@@ -16,8 +16,9 @@ def init_db():
     # you will have to import them first before calling init_db()
     import classes.registration
     Base.metadata.create_all(bind=engine)
-    from classes.registration import default_admin
+    from classes.registration import default_admin, default_user
     default_admin()
+    default_user()
 
 # from classes.database import init_db
 # init_db()

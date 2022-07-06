@@ -1,18 +1,23 @@
 from email.policy import default
 from re import L
 from unicodedata import name
-from sqlalchemy.sql.sqltypes import Boolean, DateTime, FLOAT
+from sqlalchemy.sql.sqltypes import Boolean, DateTime, FLOAT, Time
+from sqlalchemy.ext.hybrid import hybrid_property
+from sqlalchemy.orm import column_property
+from sqlalchemy.sql.expression import cast
 from wtforms.fields import DateField
 from flask_login import UserMixin
 from sqlalchemy import Table, Column, Integer, String
 from sqlalchemy.sql import func
 from classes.database import Base, db_session, ForeignKey, relationship
 import bcrypt
+import time
+import datetime
 
 role_association = Table('role_association', Base.metadata,
     Column('user_id', ForeignKey('users.userid'), primary_key=True),
     Column('role_id', ForeignKey('roles.id'), primary_key=True),
-    Column('admin_id', ForeignKey('admins.adminid'), primary_key=True),extend_existing=True
+   
 )
 
 class User(Base, UserMixin):
@@ -21,7 +26,8 @@ class User(Base, UserMixin):
     __table_args__ = {'extend_existing': True}
     
     # primary keys are required by SQLAlchemy
-    userid = Column(Integer, primary_key=True) 
+    userid = Column(Integer, primary_key=True)
+    
 
     # details
     email = Column(String(60), unique=True, nullable=False)
@@ -43,6 +49,16 @@ class User(Base, UserMixin):
     # time_calculations
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+    session_up = Column(String(20), server_default=cast(time.time(), Integer), onupdate=cast(time.time(), Integer))
+    
+    @hybrid_property
+    def sessionid(self):
+        # id = 'U'+str(self.userid)+str(int(time.mktime(datetime.datetime.fromisoformat(str(self.session_up)).timetuple())))
+        id = 'U'+str(self.userid)+str(self.session_up)
+        return id
+    @sessionid.expression
+    def sessionid(cls):
+        return 'U'+cast(cls.userid, String)+cast(cls.session_up, String) 
 
     # authorisation
     password = Column(String(100))
@@ -51,7 +67,7 @@ class User(Base, UserMixin):
     
     # # relationships
     role_id = Column(Integer, ForeignKey("roles.id"))
-
+    role = Column(String(20), ForeignKey("roles.role"))
 
     def __repr__(self):
         return f'<User {self.name!r}>'
@@ -63,7 +79,7 @@ class User(Base, UserMixin):
         return self.is_auth
 
     def get_id(self):
-        return self.userid
+        return self.sessionid
 
     def is_anonymous(self):
         if self.auth == True:
@@ -72,8 +88,8 @@ class User(Base, UserMixin):
             return True 
     @property
     def is_administrator(self):
-        if self.name=='avialxee':
-            return True#self.user_role.is_admin()
+        if self.role=='admin':
+            return True
         else:
             return False
     
@@ -83,10 +99,8 @@ class Role(Base):
     query = db_session.query_property()
     __tablename__ = 'roles'
     id = Column(Integer, primary_key=True)
-    role = Column(String(15), nullable=False )
-    
-
-    
+    role = Column(String(20), nullable=False, default='user' )
+        
     def is_user(self):
         return True
     
@@ -122,11 +136,23 @@ class BackendAdmin(Base, UserMixin):
     password = Column(String(100))
     name = Column(String(15), unique=True, nullable=False)
 
+    # on update
+    session_up = Column(String(20), server_default=cast(time.time(), Integer), onupdate=cast(time.time(), Integer))
+    
+    @hybrid_property
+    def sessionid(self):
+        # id = 'U'+str(self.userid)+str(int(time.mktime(datetime.datetime.fromisoformat(str(self.session_up)).timetuple())))
+        id = 'B'+str(self.adminid)+str(self.session_up)
+        return id
+    @sessionid.expression
+    def sessionid(cls):
+        return 'B'+cast(cls.adminid, String)+cast(cls.session_up, String) 
+
     # roles
     is_admin = Column(Boolean, default=False)
     is_content_creator = Column(Boolean, default=False)
     is_auth = Column(Boolean, default=False)    
-    is_active = is_auth = Column(Boolean, default=False)
+    is_active = Column(Boolean, default=False)
 
     # relationship
     # role_id = Column(Integer, ForeignKey("roles.id"))
@@ -139,7 +165,8 @@ class BackendAdmin(Base, UserMixin):
         return self.is_auth
 
     def get_id(self):
-        return self.adminid
+        # adminsessionid='A'+str(self.adminid)+str(self.session_id)
+        return self.sessionid
 
     def is_anonymous(self):
         if self.auth == True:
@@ -169,4 +196,19 @@ def default_admin():
         password_hash = bcrypt.hashpw(default_pwd.encode('utf-8'), salt)
         admin=BackendAdmin(name='admin', password=password_hash, email='admin@example.com', role_id=role_id)
         db_session.add(admin)
+        db_session.commit()
+
+def default_user():
+    try:
+        role_id=Role.query.filter_by(role='user').first().id
+    except:
+        add_role(role_name='user')
+        role_id=Role.query.filter_by(role='user').first().id
+    db_session.commit()
+    if not User.query.filter_by(name='user').first():# -- password hashing and checking
+        salt = bcrypt.gensalt()
+        default_pwd='user'
+        password_hash = bcrypt.hashpw(default_pwd.encode('utf-8'), salt)
+        user=User(name='user', password=password_hash, email='user@example.com', role_id=role_id)
+        db_session.add(user)
         db_session.commit()

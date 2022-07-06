@@ -1,6 +1,6 @@
 from flask import Blueprint, redirect, url_for, abort
 from flask_admin.contrib.sqla import ModelView
-from classes.registration import BackendAdmin, User, Role
+from classes.registration import User, Role
 from flask_login import current_user, login_required
 from flask_admin import BaseView, expose, AdminIndexView, Admin
 
@@ -68,6 +68,5 @@ def register_admin(db_session):
     #admin.add_view(ModelView(AdminModelView, db_session))
     admin.add_view(AdminModelView(User, db_session))
     admin.add_view(AdminModelView(Role, db_session))
-    admin.add_view(AdminModelView(BackendAdmin, db_session))
     admin.add_view(AnalyticsView(name='Analytics'))
     

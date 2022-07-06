@@ -4,3 +4,78 @@
     <p class="lead">Hands that understand Auto-care.</p>
 </div>
 {% endmacro %}
+
+{% macro setting_smtp(sform, fss) %}
+
+<div class="row pt-2 " id="contact">
+    <div class="mx-auto registration form-row ">
+        <div class="">
+            <form method="post" class="w-100">
+                <div class="row justify-content-center " >
+                    <div class="col-5">
+                    <div class="form-floating">
+                        {{sform.MAIL_DEFAULT_SENDER(class="form-control mt-2", placeholder=fss['MAIL_DEFAULT_SENDER'], id="MAIL_DEFAULT_SENDER", value=fss['MAIL_DEFAULT_SENDER'])}}
+                        <label for="MAIL_DEFAULT_SENDER">MAIL_DEFAULT_SENDER</label>
+                    </div>
+                    </div>
+                    <div class="col-5">
+                    </div>
+                    
+                </div>
+                <div class="row justify-content-center " >
+                    <div class="col-5">
+                    <div class="form-floating">
+                        {{sform.MAIL_SERVER(class="form-control mt-2", placeholder=fss['MAIL_SERVER'], id="MAIL_SERVER", value=fss['MAIL_SERVER'])}}
+                        <label for="MAIL_SERVER">MAIL_SERVER</label>
+                    </div>
+                    </div>
+                
+                    <div class="col-5">
+                    <div class="form-floating">
+                        {{sform.MAIL_PORT(class="form-control mt-2", placeholder=fss['MAIL_PORT'], id="MAIL_PORT", value=fss['MAIL_PORT'])}}
+                        <label for="MAIL_PORT">MAIL_PORT</label>
+                    </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center " >
+                    <div class="col-5">
+                    <div class="form-floating">
+                        {{sform.MAIL_USERNAME(class="form-control mt-2", placeholder=fss['MAIL_USERNAME'], id="MAIL_USERNAME", value=fss['MAIL_USERNAME'])}}
+                        <label for="MAIL_USERNAME">MAIL_USERNAME</label>
+                    </div>
+                    </div>
+                    <div class="col-5">
+                    <div class="form-floating">
+                        {{sform.MAIL_PASSWORD(class="form-control mt-2", placeholder=fss['MAIL_PASSWORD'], id="MAIL_PASSWORD", value=fss['MAIL_PASSWORD'])}}
+                        <label for="MAIL_PASSWORD">MAIL_PASSWORD</label>
+                    </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center " >
+                    <div class="col-5">
+                    <div class="form-floating">
+                        {% set BOOL_MAIL_USE_TLS = fss['MAIL_USE_TLS']|string %}
+                        {% set z = sform.MAIL_USE_TLS.process_data(BOOL_MAIL_USE_TLS) %}
+                        {{sform.MAIL_USE_TLS(class="form-select mt-2", id="MAIL_USE_TLS", )}}
+                        <label class="form-floating-label" for="MAIL_USE_TLS">MAIL_USE_TLS</label>
+                    </div>
+                    </div>
+                    <div class="col-5">
+                    <div class="form-floating">
+                        {% set BOOL_MAIL_USE_SSL = fss['MAIL_USE_SSL']|string %}
+                        {% set zz = sform.MAIL_USE_SSL.process_data(BOOL_MAIL_USE_SSL) %}
+                        {{sform.MAIL_USE_SSL(class="form-select mt-2", placeholder=fss['MAIL_USE_SSL'], id="MAIL_USE_SSL", )}}
+                        <label class="form-select-label" for="MAIL_USE_SSL">MAIL_USE_SSL</label>
+                    </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center py-3">
+                    <button name="submit" type="submit" class="col-3 btn btn-outline-dark rounded-pill" value="">
+                        Set
+                    </button>    
+                </div>
+            </form>
+        </div>  
+    </div>
+</div>
+{% endmacro %}
