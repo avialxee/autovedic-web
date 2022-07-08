@@ -9,7 +9,7 @@ from classes.registration import BackendAdmin, Role, User
 import bcrypt
 from admin import AdminTemplatesView
 from functools import wraps
-from classes.contact_details import read_contact_details
+from classes.contact_details import read_contact_details, remove_contact_details
 from pandas import read_json
 from classes.smtp import set_smtp_settings, fetch_smtp_settings, mail
 from admin.forms import SetSMTP
@@ -30,15 +30,22 @@ def admin_only(f):
     return wrap
 
 @admin_bp.before_request
-@admin_only
+# @admin_only
 def before_request():
     """ Protect all of the admin endpoints. """
     pass
 
 @admin_bp.route('/')
 def index():
-    df=read_json(read_contact_details())
-    return render_template('admin_index.html', contact_details=df.to_html(classes='table table-striped table-responsive table-bordered'))
+    df=read_contact_details()
+    df.index+=1
+    new_dates=df.index.set_names("#")
+    df.index=new_dates
+    df.columns.name = df.index.name
+    df.index.name = None
+    # df.drop(inplace=True, index=False)
+    url_deleterow=url_for('admin_bp.delete_row_forcontactus')
+    return render_template('admin_index.html', contact_details=df.to_html(table_id='contact-us-table',classes='table table-striped table-responsive table-bordered'), urldelrow=url_deleterow,)
 
 @admin_bp.route('/test')
 def test_admin():
@@ -166,6 +173,20 @@ def admin_settings():
         # except:
         #     flash('Failed!')
     return render_template('settings.html', sform=sform, fss=fss)
+
+# delete row from a csv file
+@admin_bp.route('/delete-row-contactus/', methods=['POST'])
+def delete_row_forcontactus():
+    if request.method == 'POST':
+        print('method is POST')
+        row_no=request.form['rowno']
+        res=remove_contact_details(row_no)
+        return 'success', 200
+
+
+
+
+
 
 # error handlers
 @admin_bp.app_errorhandler(404)

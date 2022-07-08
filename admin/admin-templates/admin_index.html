@@ -2,15 +2,67 @@
 {% block style %}
 
 {% endblock %}
+
 {% block body %}
 <h2>{% block title %}
     Contact Us Form
     {% endblock %}
 </h2>
-<div class="table  table-hover table-striped table-responsive table-bordered">
-    
-        {{contact_details|safe}}
-    
-    
+
+<!--  contact us form starts -->
+
+
+<div class="table contact-us table-hover table-striped table-responsive table-bordered">
+        {{contact_details|safe}}    
 </div>
+<script>
+    $(document).ready( function () {
+        row_thead = $('table#contact-us-table thead tr');
+        row_thead.append('<td></td>');
+        rows_data=$('table#contact-us-table tbody tr');
+        rows_data.each(function(t,d){
+            this.id=t;
+            console.log(this.data);
+        });
+        rows_data.append('<td></td>')
+        var table= $('#contact-us-table').DataTable(
+            {
+            "columns":[
+            // {"title":"brand", },
+            // {"title":"model", },
+            // {"title":"fullname", },
+            // {"title":"email", },
+            // {"title":"phone", },
+            // {"title":"time", },
+            // {"title":"ip", },
+                null,null,null,null,null,null,null,
+                null,
+                
+            {"title": "","mRender":function ( data, type, row ) {
+                            // return '<a href=add.html?id='+row.id+'>Edit</a>';
+                                return '<button class="btn" type="submit" href="#"><i class="bi bi-trash"></i></button>';}
+                        }
+            ]
+            }
+        );
+        
+        
+                
+        rows_data.on('click', 'i.bi-trash',  function(){
+            rowd=$(table.row(this).data());
+            delete_id=$(this).closest('tr').attr('id');
+            var xhr2 = $.ajax({
+                    url: '{{urldelrow}}',
+                    method: 'POST',
+                    data:{'rowno':delete_id},
+                    statusCode: {
+                        200: function (response) {
+                            window.location.reload();                          
+                            // data = Object.keys(JSON.parse(response))
+                        }}});
+        })
+        
+    } );
+    </script>
+<!-- contact us form ends  -->
 {% endblock %}
