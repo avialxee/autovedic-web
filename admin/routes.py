@@ -30,7 +30,7 @@ def admin_only(f):
     return wrap
 
 @admin_bp.before_request
-# @admin_only
+@admin_only
 def before_request():
     """ Protect all of the admin endpoints. """
     pass
