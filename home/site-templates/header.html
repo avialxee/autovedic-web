@@ -12,10 +12,26 @@
                 <ul class="navlinks">
                     <li class="  nav-item "><a class="nav-link" href="https://avialxee.000webhostapp.com/">
                         Blog</a></li>
-		            <li class="  nav-item "><a class="nav-link" href="{{ url_for('site.login')}}">
+                    {% if current_user.is_auth %}
+                    <li class="nav-item dropdown ">
+                        <a class="nav-link dropdown-toggle" href="{{ url_for('site.user_account')}}"  id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-expanded="false">
+                            {{current_user.name}}
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="{{url_for('site.user_account')}}">Account</a>
+                            <a class="dropdown-item" href="{{url_for('site.logout')}}">Logout</a>
+                        </div>
+                        
+                    </li>
+
+                        
+                    {% else %}
+                    <li class="  nav-item "><a class="nav-link" href="{{ url_for('site.login')}}">
                         Login</a></li>
-			        <li class="  nav-item "><a class="nav-link" href="{{ url_for('site.register')}}">
+                    <li class="  nav-item "><a class="nav-link" href="{{ url_for('site.register')}}">
                         Sign Up</a></li>
+                    {% endif %}
+			        
                 </ul>
             </div>
             <span class="navTrigger">

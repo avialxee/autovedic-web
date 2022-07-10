@@ -1,13 +1,31 @@
 {% extends "site-base.html" %}
 
 <!-- title -->
-{% block title %} 
+{% block title %}
     {% if user %}
         {{ current_user.fullname }} 
+
+    {% else %}
+        Account
     {% endif %}
 {% endblock %} 
 
 {% block body %}
+
+<div class="jumbotron m-2">
+    <div class="row">
+        <div class="col-6 justify-content-left">
+            <h4 class="">{{current_user.fullname}}</h4>
+            {{current_user.email}} | {{current_user.mobile}}
+        </div>
+        <div class="col-6 text-right justify-content-right">
+            <button class="btn btn-outline-secondary"> Edit Profile</button>
+        </div>
+    </div>
+    
+  </div>
+
+
 <div class="container text-center">
     <div>
         {{current_user.fullname}}

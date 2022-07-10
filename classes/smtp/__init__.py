@@ -3,12 +3,12 @@ import dotenv
 import os
 
 mail = Mail()
-
+env_file='home/site-static/rootmedia/.env'
 def fetch_smtp_settings(envfile=None):
     """
     returns a configuration dictionary to initialize flask app
     """
-    dotenv_file = dotenv.find_dotenv() or envfile
+    dotenv_file = dotenv.find_dotenv() or envfile or env_file
     dotenv.load_dotenv(dotenv_file, override=True)
     config={
         'MAIL_SERVER':os.environ['MAIL_SERVER'],

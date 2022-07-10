@@ -9,7 +9,7 @@ import os
 from classes.smtp import fetch_smtp_settings
 from classes.smtp.test_mail import test_msg
 from classes.smtp.new_contactus import send_mail_newcontact
-from classes.registration import User
+from classes.registration import BackendAdmin, User
 from classes.database import db_session
 import bcrypt
 from classes.contact_details import record_contact_details
@@ -64,7 +64,6 @@ def index():
                     # if formd['ip'] in 
                     df=record_contact_details(formd)
                     flash('Sent! We will contact you ASAP.', 'success')
-                    print(os.environ['MAIL_DEFAULT_SENDER'],os.environ['MAIL_NOTIFY_TO'])
                     fss=fetch_smtp_settings()
                     if fss['MAIL_NOTIFICATION_ON']:
                         send_mail_newcontact(fss['MAIL_DEFAULT_SENDER'],[fss['MAIL_NOTIFY_TO']], HTML=df.to_html())
@@ -72,7 +71,7 @@ def index():
                     flash('Failed! Please select Car Model', 'danger')
         else:
             flash('Try Again! All fields are compulsory.', 'danger')
-    return render_template('home.html', content=sform, cform=cform)
+    return render_template('home.html', content=sform, cform=cform, endpoint=request.endpoint)
 
 
 # TODO: write this properly
@@ -200,7 +199,7 @@ def login():
 def logout():
     #session.clear()
     # print(current_user.userid)
-    user = User.query.filter_by(sessionid=current_user.sessionid).first()
+    user = User.query.filter_by(sessionid=current_user.sessionid).first() or BackendAdmin.query.filter_by(sessionid=current_user.sessionid).first()
     user.is_auth=False
     db_session.commit()
     logout_user()

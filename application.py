@@ -41,7 +41,6 @@ def create_app():
     from classes.registration import User, BackendAdmin
     @login_manager.user_loader
     def load_user(userid):
-        print(userid) 
         fid = User.query.filter_by(sessionid=userid).first()
         if fid == None:
             userid = userid.replace('U', 'B')

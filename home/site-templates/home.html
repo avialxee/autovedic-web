@@ -55,6 +55,7 @@
                     
                 </div>
                 <div class="p-2 m-2 ">
+                {% if endpoint=='site.index' %}
                 {% with messages = get_flashed_messages(with_categories=true) %}  
                     {% if messages %}  
                           {% for category, message in messages %}  
@@ -62,6 +63,7 @@
                           {% endfor %}  
                     {% endif %}  
                  {% endwith %}  
+                 {% endif %}  
                 </div>
             </div>
             

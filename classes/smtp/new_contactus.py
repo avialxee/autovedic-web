@@ -3,7 +3,6 @@ from . import mail
 from flask_mail import Message
 
 def send_mail_newcontact(sender_email, to_list_email, HTML=None):
-    print(current_app.config['MAIL_SERVER'])
     msg = Message('Autovedic - Contact Us Form',
                     sender=sender_email,
                         recipients=to_list_email, )
