@@ -4,6 +4,7 @@ from flask import Flask
 from requests import session
 from settings import MAIL_SERVER,MAIL_PORT,MAIL_USE_TLS,MAIL_USERNAME,MAIL_PASSWORD
 from classes.smtp import fetch_smtp_settings
+from home.forms import recaptcha_config
 
 def create_app():
     app = Flask(__name__)
@@ -59,7 +60,11 @@ def create_app():
     #     MAIL_USERNAME = MAIL_USERNAME,
     #     MAIL_PASSWORD = MAIL_PASSWORD
     # ))
+    
     app.config.update(fetch_smtp_settings('home/site-static/rootmedia/.env'))
+    app.testing=False
+    app.config.update(recaptcha_config())
+    
     from classes.smtp import mail
     mail.init_app(app)
 

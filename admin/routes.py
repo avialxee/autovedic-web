@@ -30,7 +30,7 @@ def admin_only(f):
     return wrap
 
 @admin_bp.before_request
-@admin_only
+# @admin_only
 def before_request():
     """ Protect all of the admin endpoints. """
     pass
@@ -39,8 +39,8 @@ def before_request():
 def index():
     df=read_contact_details()
     df.index+=1
-    new_dates=df.index.set_names("#")
-    df.index=new_dates
+    serial=df.index.set_names("#")
+    df.index=serial
     df.columns.name = df.index.name
     df.index.name = None
     # df.drop(inplace=True, index=False)
@@ -78,8 +78,9 @@ def admin_logout():
 @admin_bp.route('/admin-login', methods=['GET', 'POST'])
 def admin_login():
     form = LoginForm()
+    next_url = request.args.get('next')
     if current_user.is_administrator:
-        redirect(next_url or url_for('admin_bp.index'))
+        return redirect(url_for('admin_bp.index'))
     if request.method=='POST':
         user = BackendAdmin.query.filter_by(name=request.form['username']
                         ).first()
@@ -103,15 +104,17 @@ def admin_login():
                 flash('wrong password!')
         else:
             flash('failed!')
-        next_url = request.args.get('next')
+        
         if not is_url_safe(next_url):
             return abort(400)
         return redirect(next_url or url_for('admin_bp.index'))
-    return AdminTemplatesView().render('admin-login.html', form=form)
+    return render_template('admin-login.html', form=form)
 
 @admin_bp.route('/admin-register', methods=['GET', 'POST'])
 def admin_register():
     form = RegisterForm()
+    if current_user.is_administrator:
+        return redirect(url_for('admin_bp.index'))
     if request.method=='POST':
         email = request.form['email']
         password = request.form['password'].encode('utf-8')
@@ -149,6 +152,10 @@ def admin_register():
         return redirect(next_url or url_for('admin_bp.admin_register') or url_for('admin_bp.index'))
     return AdminTemplatesView().render('admin-register.html', form=form)
 
+@admin_bp.route('/profile', methods=['GET', 'POST'])
+def admin_profile():
+    return render_template('admin_profile.html')
+
 @admin_bp.route('/settings', methods=['GET', 'POST'])
 def admin_settings():
     # envfile=url_for('site.static', filename='rootmedia/.env', _external=True)
@@ -162,8 +169,11 @@ def admin_settings():
         fss['MAIL_USERNAME']=request.form['MAIL_USERNAME']
         fss['MAIL_PASSWORD']=request.form['MAIL_PASSWORD']
         fss['MAIL_DEFAULT_SENDER']=request.form['MAIL_DEFAULT_SENDER']
+        fss['MAIL_NOTIFY_TO']=request.form['MAIL_NOTIFY_TO']
         fss['MAIL_USE_TLS']=request.form['MAIL_USE_TLS'].lower() == 'true'
         fss['MAIL_USE_SSL']=request.form['MAIL_USE_SSL'].lower() == 'true'
+        fss['MAIL_NOTIFICATION_ON']=request.form['MAIL_NOTIFICATION_ON'].lower() == 'true'
+
         # try:
         set_smtp_settings(envfile,**fss)
         flash('Success!')

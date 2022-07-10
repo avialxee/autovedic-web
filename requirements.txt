@@ -10,3 +10,4 @@ Flask-mail
 python-dotenv
 flask_admin
 email_validator
+flask_wtf==1.0.1

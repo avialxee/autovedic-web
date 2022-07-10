@@ -10,6 +10,7 @@ class SetSMTP(Form):
     MAIL_USERNAME=StringField('MAIL_USERNAME', render_kw={'placeholder':'MAIL_USERNAME'}, validators=[validators.required(), validators.Length(min=2,max=40)])
     MAIL_PASSWORD=StringField('MAIL_PASSWORD', render_kw={'placeholder':'MAIL_PASSWORD'}, validators=[validators.required(), validators.Length(min=2,max=40)])
     MAIL_DEFAULT_SENDER=StringField('Email ',  render_kw={"placeholder": "Email"}, validators=[validators.Email(), validators.required()])
+    MAIL_NOTIFY_TO=StringField('Email ',  render_kw={"placeholder": "Email"}, validators=[validators.Email(), validators.required()])
     MAIL_USE_TLS=SelectField(choices=[(True, 'True'), (False, 'False')],validators=[validators.required()],coerce=lambda x: x == 'True')
-    # BooleanField('MAIL_USE_TLS', render_kw={'placeholder':'MAIL_USE_TLS'}, false_values={False, 'false', ''})
     MAIL_USE_SSL=SelectField(choices=[(True, 'True'), (False, 'False')],validators=[validators.required()],coerce=lambda x: x == 'True')
+    MAIL_NOTIFICATION_ON=SelectField(choices=[(True, 'True'), (False, 'False')],validators=[validators.required()],coerce=lambda x: x == 'True')

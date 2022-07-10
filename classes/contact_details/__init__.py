@@ -35,8 +35,8 @@ class ContactDetails:
         time=formd['time']
         ip=formd['ip']
         df_form = pd.DataFrame([[brand,model,fullname,email,phone,time,ip]] , columns=['brand','model','fullname','email','phone','time','ip'])
-        df_form.to_csv(url_db,mode='a', index=True, header=False, index_label='#')
-    
+        df_form.to_csv(url_db,mode='a', index=False, header=False, index_label='#')
+        return df_form
     def read_details(self):
         url_db = 'home/'+url_for('site.static', filename='rootmedia/contact-details.csv')
         

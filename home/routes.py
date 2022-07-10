@@ -6,7 +6,9 @@ from classes.url import is_url_safe
 from flask_login import login_user, login_required, logout_user, current_user
 from functools import wraps
 import os
+from classes.smtp import fetch_smtp_settings
 from classes.smtp.test_mail import test_msg
+from classes.smtp.new_contactus import send_mail_newcontact
 from classes.registration import User
 from classes.database import db_session
 import bcrypt
@@ -14,7 +16,7 @@ from classes.contact_details import record_contact_details
 from datetime import datetime
 import time            
 site = Blueprint(name='site', import_name= __name__, template_folder='site-templates', static_folder='site-static')
-
+from flask_wtf import csrf
 # WRAPER
 
 def auth_root(f):
@@ -42,28 +44,34 @@ def auth_root(f):
 def index():
     sform = SearchForm(request.form)
     cform = ContactUsForm()
-
+    csrf.generate_csrf()
     if request.method == 'POST':
-        #flash('selected {}'.format(request.form['model_brand']))
-        # session['search'] = 'vendor-search'
-        # return redirect(url_for('site.search_result', service_gid=request.form['service_sname']))
-        if 'car_model' in request.form:
-            date = str(datetime.now())
-            
-            formd={'brand':request.form['car_brand'], 
-                    'model':request.form['car_model'],
-                    'fullname':request.form['fullname'],
-                    'email':request.form['email'],
-                    'phone':request.form['phone'],
-                    'time':date,
-                    'ip':str(request.environ['REMOTE_ADDR'] if request.environ.get('HTTP_X_FORWARDED_FOR') is None else request.environ['HTTP_X_FORWARDED_FOR'])
-                    }
-            # if formd['ip'] in 
-            record_contact_details(formd)
-            flash('Sent! We will contact you ASAP.', 'success')
+        if cform.validate_on_submit():
+            #flash('selected {}'.format(request.form['model_brand']))
+            # session['search'] = 'vendor-search'
+            # return redirect(url_for('site.search_result', service_gid=request.form['service_sname']))
+                if all(val in request.form for val in ['car_model']):
+                    date = str(datetime.now())
+                    
+                    formd={'brand':request.form['car_brand'], 
+                            'model':request.form['car_model'],
+                            'fullname':request.form['fullname'],
+                            'email':request.form['email'],
+                            'phone':request.form['phone'],
+                            'time':date,
+                            'ip':str(request.environ['REMOTE_ADDR'] if request.environ.get('HTTP_X_FORWARDED_FOR') is None else request.environ['HTTP_X_FORWARDED_FOR'])
+                            }
+                    # if formd['ip'] in 
+                    df=record_contact_details(formd)
+                    flash('Sent! We will contact you ASAP.', 'success')
+                    print(os.environ['MAIL_DEFAULT_SENDER'],os.environ['MAIL_NOTIFY_TO'])
+                    fss=fetch_smtp_settings()
+                    if fss['MAIL_NOTIFICATION_ON']:
+                        send_mail_newcontact(fss['MAIL_DEFAULT_SENDER'],[fss['MAIL_NOTIFY_TO']], HTML=df.to_html())
+                else:
+                    flash('Failed! Please select Car Model', 'danger')
         else:
-            flash('Failed! Please select Car Model', 'danger')
-        
+            flash('Try Again! All fields are compulsory.', 'danger')
     return render_template('home.html', content=sform, cform=cform)
 
 

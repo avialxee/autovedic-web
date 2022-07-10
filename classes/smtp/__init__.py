@@ -16,9 +16,11 @@ def fetch_smtp_settings(envfile=None):
         'MAIL_USERNAME':os.environ['MAIL_USERNAME'],
         'MAIL_PASSWORD':os.environ['MAIL_PASSWORD'],
         'MAIL_DEFAULT_SENDER':os.environ['MAIL_DEFAULT_SENDER'],
+        'MAIL_NOTIFY_TO':os.environ['MAIL_NOTIFY_TO'],
         'MAIL_USE_TLS':os.environ['MAIL_USE_TLS'].lower() == 'true',
-        'MAIL_USE_SSL':os.environ['MAIL_USE_SSL'].lower() == 'true'
-    }
+        'MAIL_USE_SSL':os.environ['MAIL_USE_SSL'].lower() == 'true',
+        'MAIL_NOTIFICATION_ON':os.environ['MAIL_NOTIFICATION_ON'].lower() == 'true',
+        }
     return config
 
 def set_smtp_settings(envfile=None, **config_dict):
