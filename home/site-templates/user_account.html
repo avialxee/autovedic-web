@@ -12,38 +12,59 @@
 
 {% block body %}
 
-<div class="jumbotron m-2">
-    <div class="row">
-        <div class="col-6 justify-content-left">
+
+<div class="m-2 text-dark bg-light rounded-3 border">
+    <div class="d-flex justify-content-end">
+        <div class="col-5 m-4">
             <h4 class="">{{current_user.fullname}}</h4>
             {{current_user.email}} | {{current_user.mobile}}
         </div>
-        <div class="col-6 text-right justify-content-right">
-            <button class="btn btn-outline-secondary"> Edit Profile</button>
+        <div class="col-5 m-4 text-end">
+            <a href="{{url_for('site.user_account_edit')}}" class=" btn btn-outline-secondary"> Edit Profile</a >
         </div>
     </div>
     
-  </div>
+</div>
 
-
-<div class="container text-center">
-    <div>
-        {{current_user.fullname}}
+<div class="container-fluid col-8">
+    <div class="row align-items-md-stretch">
+        <div class="col-md-4">
+            <div class="h-100 p-5 bg-dark text-light border rounded-3">
+            <h2>Addresses</h2>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="h-100 p-5 bg-dark text-light border rounded-3">
+                <h2>Favourites</h2>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="h-100 p-5 bg-dark text-light border rounded-3">
+                <h2>Billing</h2>
+            </div>
+        </div>
+        
     </div>
-    <div>
-        {{current_user.email}}
-    </div>
-    <div>
-        {{current_user.name}}
-    </div>
-    <div>
-        {{current_user.created_at}}
-    </div>
-    <div>
-        {{current_user.updated_at}}
-    </div>
-    <div>
-        {{current_user.last_vehicle_model_nm}}
+    
+    <div class="row align-items-md-stretch py-2">
+        <div class="col-md-4">
+            <div class="h-100 p-5 bg-dark text-light border rounded-3">
+            <h2>Support</h2>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="h-100 p-5 bg-dark text-light border rounded-3">
+                <h2>Orders</h2>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="h-100 p-5 bg-dark text-light border rounded-3">
+            <h2>Privacy</h2>
+            </div>
+        </div>
+        
     </div>
 </div>
+ 
+
 {% endblock %}

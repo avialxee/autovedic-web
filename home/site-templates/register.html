@@ -1,10 +1,20 @@
 {% extends "site-base.html" %}
 
+{% block style %}
+ main{
+    padding-top:10vh;
+    
+ }
+body{
+    
+    background-color: #f5f5f5;
+}
+
+{% endblock %} 
 {% block body %}
-<h2 class="text-center m-4">{% block title %} Sign Up {% endblock %} </h2>
 {% with messages = get_flashed_messages() %}
         {% if messages %}
-            <div class=" alert alert-info w-25 mx-auto">
+        <div class=" alert alert-info w-25 mx-auto">
                 
             <span class="field">
                 {% for message in messages %}
@@ -12,80 +22,48 @@
                 {% endfor %}
             </span>
             {% endif %}
-        {% endwith %}
-            </div>
-    <div class="mx-auto container registration  form-row ">
-        <form method="post" class="mx-auto">
-            <div class="field">
-                <p class="has-icons-left">
-                    <div class="">
-                    {{form.firstname}}
-                    <span class="icon is-small is-left">
-                    </div>
-                    
-                    </span>
-                </p>
-            </div>
-            <div class="field">
-                <p class="has-icons-left">
-                    <div class="">
-                    {{form.lastname}}
-                    <span class="icon is-small is-left">
-                    </div>
-                    
-                    </span>
-                </p>
-            </div>
-            <div class="field">
-                <p class="has-icons-left">
-                    <div class="">
-                    {{form.username}}
-                    <span class="icon is-small is-left">
-                    </div>
-                    
-                    </span>
-                </p>
-            </div>
-            <div class="field">
-                <p class="has-icons-left">
-                    <div class="">
-                    {{form.email}}
-                    <span class="icon is-small is-left">
-                    </div>
-                    
-                    </span>
-                </p>
-            </div>
-            <div class="field">
-                <p class="has-icons-left">
-                    <div class="">
-                    {{form.password}}
-                    <span class="icon is-small is-left">
-                    </div>
-                    
-                    </span>
-                </p>
-            </div>
-            <div class="field">
-                <p class="has-icons-left">
-                    <div class="">
-                    {{form.repassword}}
-                    <span class="icon is-small is-left">
-                    </div>
-                    
-                    </span>
-                </p>
-            </div>
-            <div class="field">
-                <p class="has-icons-left">
-                    <button type="submit" class="btn btn-secondary" name="login" value="Login">Register</button>
-                    <span>Login <a href="{{url_for('site.login')}}">here</a></span>
-                </p>
-            </div>
-            
+        </div>
+{% endwith %}
 
-        </form>
+<main class="m-auto">
+    <h1 class="h3 mb-3 fw-normal text-center">{% block title %}Sign up{% endblock %} </h1>
+     <div class="form-sigin col-3 m-auto h6 text-left">
+        <div class="m-auto container registration  form-row ">
+            <form method="post" class="mx-auto">
+                <div class="form-floating mb-3">
+                    {{form.firstname(class="form-control", id="firstname")}}
+                    <label for="firstname">First Name</label>
+                </div>
+                <div class="form-floating mb-3">
+                    {{form.lastname(class="form-control", id="lastname")}}
+                    <label for="lastname">Last Name</label>
+                </div>
+                <div class="form-floating mb-3">
+                    {{form.username(class="form-control", id="username")}}
+                    <label for="username">Username</label>
+                </div>
+                <div class="form-floating mb-3">
+                    {{form.email(type="email", class="form-control", id="email", placeholder="name@example.com")}}
+                    <label for="email">Email</label>
+                </div>
+                
+                            
+                <div class="form-floating mb-3">
+                    {{form.password(class="form-control",type="password",placeholder="Password", id="password")}}
+                    <label for="password">Password</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    {{form.repassword(class="form-control",type="password",placeholder="Password", id="repassword")}}
+                    <label for="repassword">Password</label>
+                </div>
+                <div class="py-2">
+                    <button class="w-100 btn btn-lg btn-primary" type="submit">Register</button>            
+                </div>
+                
+            </form>
+        </div>
     </div>
-
+</main>
     
 {% endblock %} <!-- body -->

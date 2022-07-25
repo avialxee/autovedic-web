@@ -1,0 +1,50 @@
+<header id="layout-header" width=100% class="bg-light">
+    <nav class="nav">
+        <div class="container" style="padding-top: 0px;">
+            <div class="logo">
+                
+                <a class="navbar-brand " href="{{ url_for('site.index')}}" >
+                    <img class="navbar-brand py-2 img-fluid" src="{{url_for('site.static',filename='media/logo-part-light.png')}}" />
+                    AUTOVEDIC
+                </a>
+            </div>
+            <div id="mainListDiv" class="main_list pt-2">
+                <ul class="navlinks">
+                    <li class="  nav-item ">
+                        <a class="nav-link" href="https://avialxee.000webhostapp.com/">
+                        Blog
+                        </a>
+                    </li>
+                    {% if current_user.is_auth %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle"  data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
+                            {{current_user.name}}
+                        </a>
+                        <ul class="dropdown-menu" >
+                            <li><a class="dropdown-item" href="{{url_for('site.user_account')}}">Account</a></li>
+                            <li><a class="dropdown-item" href="{{url_for('site.logout')}}">Logout</a></li>
+                        </ul>
+                        
+                    </li>
+
+                        
+                    {% else %}
+                    <li class="  nav-item "><a class="nav-link" href="{{ url_for('site.login')}}">
+                        Login</a></li>
+                    <li class="  nav-item "><a class="nav-link" href="{{ url_for('site.register')}}">
+                        Sign Up</a></li>
+                    {% endif %}
+			        
+                </ul>
+            </div>
+            <span class="navTrigger">
+                <i></i>
+                <i></i>
+                <i></i>
+            </span>
+        </div>
+    </nav>
+
+    <section class="home-menu">
+    </section>
+</header>

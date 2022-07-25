@@ -1,13 +1,16 @@
-{% extends 'admin-base.html' %}
+{% extends "site-base.html" %}
 
+<!-- title -->
+{% block title %}
+    {% if user %}
+        {{ current_user.fullname }} 
 
-{% block style %}
+    {% else %}
+        Account
+    {% endif %}
+{% endblock %} 
 
-{% endblock %}
 {% block body %}
-<h2 class="text-center">{% block title %} Profile
-    {% endblock %}
-</h2>
 <div class="container text-center ">
     <form class="col-10 m-3 " method="post">
         <h3 class="text-start mt-5">Edit Profile</h3><hr>
@@ -80,4 +83,5 @@
         
     </form>
 </div>
-{% endblock %}
+
+{% endblock %} 

@@ -1,8 +1,8 @@
 {% extends "admin-base.html" %}
 <!-- title -->
+<h2 class="text-center m-4">{% block title %} Login {% endblock %}  </h2>
 
 {% block body %}
-<h2 class="text-center m-4">{% block title %} Login {% endblock %}  </h2>
 {% with messages = get_flashed_messages() %}
         {% if messages %}
             <div class=" alert alert-info w-25 mx-auto">
@@ -15,68 +15,33 @@
             {% endif %}
         {% endwith %}
             </div>
-<div class="mx-auto container registration  form-row ">
-    <form method="post" class="mx-auto">
-        <div class="field form-group control">
-            <p class="has-icons-left">
-                <div class="">
-                {{form.firstname}}
-                <span class="icon is-small is-left">
-                </div>
-                
-                </span>
-            </p>
-        </div>
-        <div class="field">
-            <p class="has-icons-left">
-                <div class="">
-                {{form.lastname}}
-                <span class="icon is-small is-left">
-                </div>
-                
-                </span>
-            </p>
-        </div>
-        <div class="field">
-            <p class="has-icons-left">
-                <div class="">
-                {{form.username}}
-                <span class="icon is-small is-left">
-                </div>
-                
-                </span>
-            </p>
-        </div>
-        <div class="field">
-            <p class="has-icons-left">
-                <div class="">
-                {{form.email}}
-                <span class="icon is-small is-left">
-                </div>
-                
-                </span>
-            </p>
-        </div>
-        <div class="field">
-            <p class="has-icons-left">
-                <div class="">
-                {{form.password}}
-                <span class="icon is-small is-left">
-                </div>
-                
-                </span>
-            </p>
-        </div>
-        <div class="field">
-            <p class="has-icons-left">
-                <button type="submit" class="btn btn-secondary" name="login" value="Login">Login</button>
-                <span>Register <a href="{{url_for('admin_bp.admin_register')}}">here</a></span>
-            </p>
-        </div>
-        
-    </form>
-    
-</div>
+            <main class="m-auto">
+                <h1 class="h3 mb-3 fw-normal text-center">Please sign in</h1>
+                 <div class="form-sigin col-3 m-auto text-left">
+                     <form method="post">
+                             <div class="">
+                                 <div class="form-floating">
+                                     {{form.username(class="form-control mt-2", id="username")}}
+                                   <label for="username">Username</label>
+                                 </div>
+                                 <div class="form-floating">
+                                     {{form.password(class="form-control mt-2", id="password")}}
+                                     <label for="password">Password</label>
+                                 </div>
+                             
+                                 <div class="checkbox m-3">
+                                   <label>
+                                     <input type="checkbox" value="remember-me"> Remember me
+                                   </label>
+                                 </div>
+                                 <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+                             
+                             </div>
+                         </form>
+                 </div>   
+                 
+                 
+             </main>
 
 
 {% endblock %} <!-- body -->

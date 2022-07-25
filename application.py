@@ -5,7 +5,7 @@ from requests import session
 from settings import MAIL_SERVER,MAIL_PORT,MAIL_USE_TLS,MAIL_USERNAME,MAIL_PASSWORD
 from classes.smtp import fetch_smtp_settings
 from home.forms import recaptcha_config
-
+import dotenv
 def create_app():
     app = Flask(__name__)
     app.secret_key = os.urandom(12)
@@ -63,6 +63,8 @@ def create_app():
     app.config.update(fetch_smtp_settings('home/site-static/rootmedia/.env'))
     app.testing=False
     app.config.update(recaptcha_config())
+    dotenv.load_dotenv('home/site-static/rootmedia/.env', override=True)
+    app.config.update(os.environ)
     
     from classes.smtp import mail
     mail.init_app(app)

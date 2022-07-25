@@ -50,3 +50,6 @@ def load_services_byid(stype_id=None):
     
 def load_stype_id():
     return mm.service_stype_id()
+
+def load_service_table():
+    return mm.service_table()

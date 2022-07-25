@@ -1,5 +1,5 @@
 <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-  <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="#"><img class="navbar-brand py-2 img-fluid" src="{{url_for('site.static',filename='media/logo-part-light.png')}}" width="20%" />
+  <a href="{{url_for('admin_bp.index')}}" class="navbar-brand-admin col-md-3 col-lg-2 me-0 px-3 fs-6" href="#"><img class="navbar-brand-admin py-2 img-fluid" src="{{url_for('site.static',filename='media/logo-part-light.png')}}" width="20%" />
     <span class="fs-5 fw-semibold">AUTOVEDIC</span></a>
   <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -44,9 +44,18 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link disabled" href="#">
+        <a href="#products" class="rounded nav-link collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart align-text-bottom" aria-hidden="true"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
           Products
+        </a> 
+        <div class="collapse show col-8 text-center" id="dashboard-collapse" style="">
+          <ul class="btn-toggle-nav list-unstyled fw-normal text-right pb-1 small">
+            <li><a href="{{url_for('admin_bp.products', tablename='car-table')}}" class="link-dark rounded">Car Table</a></li>
+            <li><a href="{{url_for('admin_bp.products', tablename='map-table')}}" class="link-dark rounded">Map Table</a></li>
+            <li><a href="{{url_for('admin_bp.products', tablename='service-table')}}" class="link-dark rounded">Services</a></li>
+          </ul>
+        </div>
+          
         </a>
       </li>
       <li class="nav-item">

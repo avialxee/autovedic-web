@@ -38,3 +38,6 @@ def load_maps(pincode=None):
     
 def load_pincodes():
     return mm.map_pincodes()
+
+def load_map_table():
+    return mm.map_table()

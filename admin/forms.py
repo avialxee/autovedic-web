@@ -14,3 +14,6 @@ class SetSMTP(Form):
     MAIL_USE_TLS=SelectField(choices=[(True, 'True'), (False, 'False')],validators=[validators.required()],coerce=lambda x: x == 'True')
     MAIL_USE_SSL=SelectField(choices=[(True, 'True'), (False, 'False')],validators=[validators.required()],coerce=lambda x: x == 'True')
     MAIL_NOTIFICATION_ON=SelectField(choices=[(True, 'True'), (False, 'False')],validators=[validators.required()],coerce=lambda x: x == 'True')
+
+class Configuration(Form):
+    ADMINSIGNUP=SelectField(choices=[(True, 'True'), (False, 'False')],validators=[validators.required()],coerce=lambda x: x == 'True')

@@ -23,7 +23,7 @@ def auth_root(f):
     @wraps(f)
     @login_required
     def wrap(*args, **kwargs):
-        if current_user.name == 'avialxee':
+        if current_user.is_auth:
             return f(*args, **kwargs)
         else:
             return redirect(url_for('site.lrq'))
@@ -193,6 +193,38 @@ def login():
             return abort(400)
         return redirect(next_url or url_for('site.user_account') or url_for('site.index'))
     return render_template('login.html', form=form)
+
+@site.route('/account/edit-profile', methods=['GET', 'POST'])
+@login_required
+def user_account_edit():
+    if request.method=='POST':
+        print(request.form)
+        if request.form['submit']=='profile':
+            user = User.query.filter_by(name=current_user.name).first()
+            if user is not None:
+                # user=User(name=current_user.name, fullname=fullname,mobile=mobile,email=email)
+                user.fullname=request.form['fullname']
+                user.email=request.form['email']
+                user.mobile=request.form['mobile']
+                db_session.commit()
+        if request.form['submit']=='password':
+            password=request.form['password'].encode('utf-8')
+            newpassword=request.form['newpassword'].encode('utf-8')
+            repassword=request.form['repassword'].encode('utf-8')
+            user = User.query.filter_by(name=current_user.name).first()
+            if user:
+                if bcrypt.checkpw(password, user.password):
+                    # -- password hashing and checking
+                    salt = bcrypt.gensalt()
+                    password_hash = bcrypt.hashpw(newpassword, salt)
+                    if bcrypt.checkpw(repassword, password_hash) and newpassword == repassword:
+                        user.password=password_hash
+                        db_session.commit()
+                    else:
+                        flash("Password didn't match!")
+                        print('error')
+            
+    return render_template('user_account_edit.html')
 
 @site.route('/logout', methods=['GET'])
 @login_required

@@ -157,57 +157,69 @@ $(document).ready(function(){
 
 {% macro contact_us(form) %}
     
+<main class="m-auto">
     <div class="row pt-2 " id="contact">
-        <div class="mx-auto registration form-row ">
+        <div class="mx-auto form-row col-10">
             <div class="">
                 <form method="post" class="w-100">
+
                     {{ form.hidden_tag() }}
-                    <div class="row justify-content-center">
+                    <div class="row justify-content-center " >
                         <div class="col-5">
-                            <select id="car_brand" class="form-control " name="car_brand" type="text" value=""  required><option value="none" selected disabled hidden>Car Brand</option>
-                            </select>
-                                
+                            <div class="form-floating">
+                                <select id="car_brand" class="form-select " name="car_brand" type="text" value=""  required><option value="none" selected disabled hidden>Select Brand</option>
+                                </select>
+                                <label class="form-floating-label" for="car_brand">Brand</label>
+                            </div>
                         </div>
                         <div class="col-5">
-                            <select id="car_model" class=" form-control " name="car_model" type="text" value=""   required><option value="none" selected disabled hidden>Car Model</option>
-                            </select>
+                            <div class="form-floating">
+                                <select id="car_model" class=" form-select " name="car_model" type="text" value=""   required><option value="none" selected disabled hidden>Select Model</option>
+                                </select>
+                                <label for="car_model">Model</label>
+                            </div>
                         </div>
                     </div>
                     <div class="row justify-content-center " >
                         <div class="col-10">
-                        <div class="form-group">
-                            {{form.fullname(class="form-control mt-2")}}
+                        <div class="form-floating">
+                            {{form.fullname(class="form-control mt-2",id="fullname")}}
+                            <label for="fullname">Full Name</label>
                         </div>
                         </div>
                     </div>
                     <div class="row justify-content-center">
                         
                         <div class="col-5 ">
-                        <div class="form-group">
-                            {{form.email(class="form-control mt-2")}}
+                        <div class="form-floating">
+                            {{form.email(class="form-control mt-2", type="email", id="email")}}
+                            <label for="email">Email</label>
                         </div>
                         </div>
                         <div class="col-5 ">
-                            <div class="form-group">
-                                {{form.phone(class="form-control mt-2")}}
+                            <div class="form-floating">
+                                {{form.phone(class="form-control mt-2", type="phone", id="phone")}}
+                                <label for="phone">Phone</label>
                             </div>
                         </div>
                     </div>
-                    <div class="row  justify-content-center py-2">
-                        <div class="row col-8">
+                    <div class="row justify-content-center">
+                        <div class="m-auto col-5 py-2">
                             
                             {{ form.recaptcha }}
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="row col-12 text-right justify-content-center">
-                            <input name="submit" type="submit" class=" btn btn-outline-light rounded-pill" value="Request Call">
+                    
+                        <div class=" col-12 text-center py-2">
+                            <button name="submit" type="submit" class=" btn btn-outline-light rounded">
+                                Request Call
+                            </button>
                         </div>
                     </div>
                 </form>
             </div>  
         </div>
     </div>
+</main>
 {% endmacro %}
 
 

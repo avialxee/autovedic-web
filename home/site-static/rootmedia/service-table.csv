@@ -1,24 +1,8 @@
 Service,Service-name,Service-subtype,Service-sname,Service-desc,Service-gid
-1,General Service,1,GS1,,ATVDSVC_1
-1,General Service,2,GS 2,,ATVDSVC_2
-1,General Service,3,GS 3,,ATVDSVC_3
 1,General Service,4,GS 4,,ATVDSVC_4
-1,General Service,5,GS 5,,ATVDSVC_5
-1,General Service,6,GS 6,,ATVDSVC_6
-2,Wheel Balance,1,WB 1,,ATVDSVC_7
-2,Wheel Balance,2,WB 2,,ATVDSVC_8
-2,Wheel Balance,3,WB 3,,ATVDSVC_9
-2,Wheel Balance,4,WB 4,,ATVDSVC_10
-2,Wheel Balance,5,WB 5,,ATVDSVC_11
-2,Wheel Balance,6,WB 6,,ATVDSVC_12
-3,Denting Repair,1,DR 1,,ATVDSVC_13
 3,Denting Repair,2,DR 2,,ATVDSVC_14
 3,Denting Repair,3,DR 3,,ATVDSVC_15
-3,Denting Repair,4,DR 4,,ATVDSVC_16
-3,Denting Repair,5,DR 5,,ATVDSVC_17
 3,Denting Repair,6,DR 6,,ATVDSVC_18
-4,Painting Job,1,PJ 1,,ATVDSVC_19
-4,Painting Job,2,PJ 2,,ATVDSVC_20
 4,Painting Job,3,PJ 3,,ATVDSVC_21
 4,Painting Job,4,PJ 4,,ATVDSVC_22
 4,Painting Job,5,PJ 5,,ATVDSVC_23
@@ -27,5 +11,4 @@ Service,Service-name,Service-subtype,Service-sname,Service-desc,Service-gid
 5,Full Service,2,FS 2,,ATVDSVC_26
 5,Full Service,3,FS 3,,ATVDSVC_27
 5,Full Service,4,FS 4,,ATVDSVC_28
-5,Full Service,5,FS 5,,ATVDSVC_29
 5,Full Service,6,FS 6,,ATVDSVC_30

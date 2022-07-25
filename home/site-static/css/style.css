@@ -70,7 +70,14 @@ body {
 .nav div.main_list ul li a:hover {
     color: #00E676;
 }
-
+.dropdown-menu[data-bs-popper] {
+    left:auto;
+    right:0;
+  }
+  .dropdown-menu-dark .dropdown-item:focus, .dropdown-menu-dark .dropdown-item:hover {
+    color: #fff;
+    background-color: rgba(255,255,255,.15);
+}
 
 /* Home section */
 

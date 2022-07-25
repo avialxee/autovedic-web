@@ -1,3 +1,134 @@
+{% macro admin_product(table, urldelrow, exportcsv) %}
+
+{% set tablefile = table+'.csv' %}
+<script>$URL="{{url_for('admin_bp.uploadto_rootmedia', filename=tablefile)}}";</script>
+
+<script>
+$(document).ready( function () {
+    row_thead = $('table#{{table}} thead tr');
+    col_len=$('table#{{table}} thead th').length;
+    row_thead.append('<td></td>');
+    rows_data=$('table#{{table}} tbody tr');
+    rows_data.each(function(t,d){
+        this.id=t;
+        // console.log(this.data);
+    });
+    rows_data.append('<td></td>')
+    colarr=new Array(col_len).fill(null);
+    colarr.push(
+        {"title": "","mRender":function ( data, type, row ) {
+                        // return '<a href=add.html?id='+row.id+'>Edit</a>';
+                            return '<button class="btn" type="submit" href="#"><i class="bi bi-trash"></i></button>';}
+                    }
+        )
+    var table= $('#{{table}}').DataTable(
+        {
+            buttons:['copy', 'pdf',
+            {
+            text: 'CSV',
+                action: function ( e, dt, node, config ) {
+                    window.location = '{{exportcsv}}/all/';
+                }
+            },
+            {
+            text: 'Import',
+                action: function ( e, dt, node, config ) {
+                    $("#import-modal").modal('show');
+                }
+            },
+            {
+            text: 'Sample',
+                action: function ( e, dt, node, config ) {
+                            // window.URL.createObjectURL('{{exportcsv}}');  
+                            window.location = '{{exportcsv}}';
+                    
+                }
+            }    
+        ],
+        "columns":colarr
+        }
+    );
+    
+    table.buttons().container()
+        .appendTo( '#table-wrapper' );
+            
+    rows_data.on('click', 'i.bi-trash',  function(){
+        rowd=$(table.row(this).data());
+        global_id=$(this).closest('tr').find("th:first").text();
+        delete_id=$(this).closest('tr').attr('id');
+        
+        if(confirm("Are you sure you want to proceed?")){
+            var xhr2 = $.ajax({
+                url: '{{urldelrow}}',
+                method: 'POST',
+                data:{'rowno':parseInt(delete_id)},
+                statusCode: {
+                    200: function (response) {
+                        window.location.reload();                   
+                    }}}); 
+            // alert("{{urldelrow}}:"+delete_id)   
+        }
+        else {
+            return false;
+        }
+    })
+    
+} );
+</script>
+
+
+<div id="import-modal" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Import file</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Upload CSV file to make changes.</p>
+          <form enctype="multipart/form-data">
+            <input name="file" type="file" />
+            <input id="csv_upload" type="button" value="Upload" />
+        </form>
+        <div class="message"></div >
+        <div class="progress">
+            <div class="bar"></div >
+            
+        </div>
+        
+        <div id="status"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+        $(document).ready(function(){
+            $('#csv_upload').on('click', function(){
+                var xhr2 = $.ajax({
+                        url: $URL,
+                        method: 'POST',
+                        data:new FormData($('#import-modal form')[0]),
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        statusCode: {
+                            200: function (response) {
+                                window.location.reload();                   
+                            },
+                            400: function (response){
+                                $('div.message').text("Check File!")
+                            }
+                        }}); 
+                        });
+        });
+  </script>
+{% endmacro %}
+
+
 {% macro admin_welcome() %}
 <div class="jumbotron text-center bg-secondary text-light">
     <h1 class="display-5">Autovedic Admin</h1>
@@ -85,7 +216,7 @@
                     <div class="col-5">
                     </div>
                 <div class="row justify-content-center py-3">
-                    <button name="submit" type="submit" class="col-3 btn btn-outline-dark rounded-pill" value="">
+                    <button name="submit" type="submit" class="col-3 btn btn-outline-dark rounded-pill" value="SMTP">
                         Set
                     </button>    
                 </div>

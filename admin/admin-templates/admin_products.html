@@ -1,0 +1,16 @@
+{% extends 'admin-base.html' %}
+{% from 'admin-macro.html' import admin_product %}
+{% block style %}
+{% endblock %}
+<h2>{% block title %}
+    Cars
+    {% endblock %}
+</h2>
+{% block body %}
+<div>
+    <div id="table-wrapper" class="table product table-hover table-striped table-responsive table-bordered"></div>
+    {{table_details|safe}}
+    </div>
+    {{admin_product(tablename, urldelrow, exportcsv)}}
+</div>
+{% endblock %}
