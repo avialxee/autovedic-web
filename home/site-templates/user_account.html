@@ -15,11 +15,11 @@
 
 <div class="m-2 text-dark bg-light rounded-3 border">
     <div class="d-flex justify-content-end">
-        <div class="col-5 m-4">
+        <div class="col-6 m-2 me-0">
             <h4 class="">{{current_user.fullname}}</h4>
             {{current_user.email}} | {{current_user.mobile}}
         </div>
-        <div class="col-5 m-4 text-end">
+        <div class="col-5 my-4 mx-2 text-end">
             <a href="{{url_for('site.user_account_edit')}}" class=" btn btn-outline-secondary"> Edit Profile</a >
         </div>
     </div>

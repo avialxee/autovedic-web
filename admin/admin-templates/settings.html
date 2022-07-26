@@ -8,27 +8,29 @@
 <h2 class="text-center">{% block title %} Settings
     {% endblock %}
 </h2>
-<h4 class="h4"> SMTP Settings</h4><hr>
-    {{setting_smtp(sform,fss)}}
+<div class="m-3">
+    <h4 class="h4"> SMTP Settings</h4><hr>
+        {{setting_smtp(sform,fss)}}
 
-<!-- More Settings -->
-    <h4 class="h4"> More Settings</h4><hr>
-    <form method="post" >
-        <div class="row justify-content-center ">
-            <div class="row " >
-                <div class="col-5">
-                    <div class="form-floating pb-3">
-                        {% set BOOL_SIGNUP = fcf|string %}
-                        {% set z = confform.ADMINSIGNUP.process_data(BOOL_SIGNUP) %}
-                        {{confform.ADMINSIGNUP(class="form-select mt-2", id="ADMINSIGNUP", )}}
-                        <label class="form-floating-label" for="ADMINSIGNUP">ADMINSIGNUP</label>
+    <!-- More Settings -->
+        <h4 class="h4"> More Settings</h4><hr>
+        <form method="post" >
+            <div class="row justify-content-center ">
+                <div class="row justify-content-center" >
+                    <div class="col-lg-5 col-10">
+                        <div class="form-floating pb-3">
+                            {% set BOOL_SIGNUP = fcf|string %}
+                            {% set z = confform.ADMINSIGNUP.process_data(BOOL_SIGNUP) %}
+                            {{confform.ADMINSIGNUP(class="form-select mt-2", id="ADMINSIGNUP", )}}
+                            <label class="form-floating-label" for="ADMINSIGNUP">ADMINSIGNUP</label>
+                        </div>
                     </div>
-                </div>
-                
-        </div>
-        <button name="submit" type="submit" class="col-3 btn btn-outline-dark rounded-pill" value="Configure">
-            Set
-        </button>  
-    </form>
+                    <div class="col-lg-5"></div>
+            </div>
+            <button name="submit" type="submit" class="col-3 btn btn-outline-dark rounded-pill" value="Configure">
+                Set
+            </button>  
+        </form>
     </div> 
+</div>
 {% endblock %}

@@ -10,7 +10,7 @@ def recaptcha_config():
     config['RECAPTCHA_USE_SSL']= False
     config['RECAPTCHA_PUBLIC_KEY']= os.environ['RECAPTCHA_PUBLIC_KEY']
     config['RECAPTCHA_PRIVATE_KEY']=os.environ['RECAPTCHA_PRIVATE_KEY']
-    config['RECAPTCHA_OPTIONS'] = {'theme':'dark'}
+    config['RECAPTCHA_DATA_ATTRS'] = {'theme':'dark'}
     config['RECAPTCHA_PARAMETERS'] = {'hl': 'en', }
     return config
 

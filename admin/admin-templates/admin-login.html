@@ -1,7 +1,12 @@
 {% extends "admin-base.html" %}
 <!-- title -->
 <h2 class="text-center m-4">{% block title %} Login {% endblock %}  </h2>
-
+{% block style %}
+ main{
+    padding-top:20vh;
+    
+ }
+ {% endblock %}     
 {% block body %}
 {% with messages = get_flashed_messages() %}
         {% if messages %}
@@ -17,7 +22,7 @@
             </div>
             <main class="m-auto">
                 <h1 class="h3 mb-3 fw-normal text-center">Please sign in</h1>
-                 <div class="form-sigin col-3 m-auto text-left">
+                 <div class="form-sigin col-6 col-lg-3  m-auto text-left">
                      <form method="post">
                              <div class="">
                                  <div class="form-floating">
