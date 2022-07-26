@@ -50,7 +50,6 @@ def before_request():
 def index():
     df=read_contact_details()
 
-    df=df.loc[::-1].set_index(df.index)
     df.index+=1
     serial=df.index.set_names("#")
     df.index=serial
