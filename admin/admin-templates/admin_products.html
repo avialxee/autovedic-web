@@ -2,11 +2,12 @@
 {% from 'admin-macro.html' import admin_product %}
 {% block style %}
 {% endblock %}
+{% block body %}
 <h2>{% block title %}
-    Cars
+    {{tablename}}
     {% endblock %}
 </h2>
-{% block body %}
+<hr>
 <div>
     <div id="table-wrapper" class="table product table-hover table-striped table-responsive table-bordered"></div>
     {{table_details|safe}}
