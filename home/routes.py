@@ -240,7 +240,10 @@ def logout():
 @site.route('/account', methods=['GET', 'POST'])
 @login_required
 def user_account():
-    return render_template('user_account.html')
+    if current_user.is_administrator:
+        return redirect(url_for('admin_bp.admin_profile'))
+    else:
+        return render_template('user_account.html')
 
 @site.route('/lrq')
 @login_required

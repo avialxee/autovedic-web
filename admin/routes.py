@@ -14,7 +14,7 @@ from classes.vehicles import load_car_table,remove_car_details
 from classes.services import load_service_table
 from classes.maps import load_map_table
 import bcrypt
-from admin import AdminTemplatesView
+from admin import AdminTemplatesView, AdminModelView
 from functools import wraps
 from pandas import read_json
 from classes.smtp import set_smtp_settings, fetch_smtp_settings, mail
@@ -231,7 +231,8 @@ def admin_register():
             if not is_url_safe(next_url):
                 return abort(400)
             return redirect(next_url or url_for('admin_bp.admin_register') or url_for('admin_bp.index'))
-        return AdminTemplatesView().render('admin-register.html', form=form)
+        return render_template('admin-register.html', form=form)
+
 
 @admin_bp.route('/profile', methods=['GET', 'POST'])
 def admin_profile():
